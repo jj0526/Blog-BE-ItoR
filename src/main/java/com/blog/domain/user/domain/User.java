@@ -2,6 +2,7 @@ package com.blog.domain.user.domain;
 
 import java.time.LocalDate;
 
+import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
 import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.global.common.entity.BaseEntity;
 
@@ -52,10 +53,10 @@ public class User extends BaseEntity {
 		this.profileImageUrl = profileImageUrl;
 	}
 
-	public static User fromDTO(UserSaveDTO userSaveDTO) {
+	public static User fromDTO(UserSaveDTO userSaveDTO, PasswordEncoder passwordEncoder) {
 		return new User(
 			userSaveDTO.getEmail(),
-			userSaveDTO.getPassword(),
+			PasswordEncoder.encrypt(userSaveDTO.getEmail(), userSaveDTO.getPassword()),
 			userSaveDTO.getName(),
 			userSaveDTO.getNickname(),
 			userSaveDTO.getIntroduction(),

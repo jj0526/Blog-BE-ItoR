@@ -15,17 +15,19 @@ import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public void save(UserSaveDTO userSaveDTO) {
 		if(userRepository.findByEmail(userSaveDTO.getEmail()).isPresent()){
 			throw new UserAlreadyExistsException();
 		}
-		User user = User.fromDTO(userSaveDTO);
+		User user = User.fromDTO(userSaveDTO, passwordEncoder);
 
 		userRepository.save(user);
 	}
