@@ -58,5 +58,38 @@ public class UserRepository {
 	public Optional<User> findByRefreshToken(String refreshToken){
 		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE refreshToken = ?";
 
-public interface UserRepository{
+		try {
+			return Optional.of(jdbcTemplate.queryForObject(
+				sql,
+				new Object[] {refreshToken},
+				(rs, rowNum) -> new User(
+					rs.getLong("ID"),
+					rs.getString("EMAIL"),
+					rs.getString("PASSWORD"),
+					rs.getString("NAME")
+				)
+			));
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
+	}
+
+	public Optional<User> findByEmail(String email) {
+		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE email = ?";
+
+		try {
+			return Optional.of(jdbcTemplate.queryForObject(
+				sql,
+				new Object[] {email},
+				(rs, rowNum) -> new User(
+					rs.getLong("ID"),
+					rs.getString("EMAIL"),
+					rs.getString("PASSWORD"),
+					rs.getString("NAME")
+				)
+			));
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
+	}
 }

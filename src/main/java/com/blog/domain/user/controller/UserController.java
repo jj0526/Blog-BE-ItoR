@@ -1,13 +1,16 @@
 package com.blog.domain.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.domain.user.dto.UserResponseDTO;
 import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.domain.user.service.UserService;
+import com.blog.global.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
 
 @RestController
@@ -27,4 +30,8 @@ public class UserController {
 		return CommonResponse.createSuccess();
 	}
 
+	@GetMapping("/myinfo")
+	public CommonResponse<UserResponseDTO> myInfo(@CurrentUser Long userId){
+		return CommonResponse.createSuccess(userService.getMyInfo(userId));
+	}
 }
