@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: local
+  sql:
+    init:
+      mode: always
+      platform: mysql
+      schema-locations: classpath*:db/schema.sql
