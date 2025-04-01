@@ -6,10 +6,10 @@ CREATE TABLE IF NOT EXISTS `user`
     password        VARCHAR(255),
     name            VARCHAR(255) NOT NULL,
     kakaoId         BIGINT,
-    nickName        VARCHAR(255),
+    nickname        VARCHAR(255),
     birthDate       DATE,
     profileImageUrl VARCHAR(255),
-    introduction    TEXT,
+    introduction    TEXT         NOT NULL,
     createdAt       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modifiedAt      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
