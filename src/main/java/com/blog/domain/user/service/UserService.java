@@ -9,7 +9,7 @@ import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.domain.user.exception.UserAlreadyExistsException;
 import com.blog.domain.user.exception.UserNotFoundException;
 import com.blog.domain.user.repository.UserRepository;
-import com.blog.global.auth.jwt.encoder.PasswordEncoder;
+import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
 
 @Service
 public class UserService {

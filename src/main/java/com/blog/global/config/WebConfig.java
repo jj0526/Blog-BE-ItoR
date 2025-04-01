@@ -9,10 +9,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.blog.domain.user.repository.UserRepository;
-import com.blog.global.auth.jwt.filter.JwtFilter;
-import com.blog.global.auth.jwt.service.JwtService;
-import com.blog.global.auth.jwt.service.TokenProvider;
-import com.blog.global.auth.login.currentUser.CurrentUserArgumentResolver;
+import com.blog.domain.auth.jwt.filter.JwtFilter;
+import com.blog.domain.auth.jwt.service.JwtService;
+import com.blog.domain.auth.jwt.service.TokenProvider;
+import com.blog.domain.auth.login.currentUser.CurrentUserArgumentResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

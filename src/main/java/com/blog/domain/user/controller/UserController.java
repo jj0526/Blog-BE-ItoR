@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blog.domain.user.dto.UserResponseDTO;
 import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.domain.user.service.UserService;
-import com.blog.global.auth.login.currentUser.CurrentUser;
+import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
 
 @RestController
