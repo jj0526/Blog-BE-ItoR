@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 	private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
-	private static final List<String> excludedUrls = List.of("/login", "/api/users/signup");
+	private static final List<String> excludedUrls = List.of("/login", "/api/users/signup, /auth/login/kakao");
 	@Value("${blog.jwt.key}")
 	private String SECRET_KEY;
 
@@ -42,6 +42,15 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		if (excludedUrls.contains(request.getRequestURI())) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		String accessToken = jwtService.extractAccessToken(request)
+			.filter(this::isTokenValid)
+			.orElse(null);	// 먼저 Access Token 추출
+
+		if (accessToken != null) {// Access Token이 유효
 			filterChain.doFilter(request, response);
 			return;
 		}

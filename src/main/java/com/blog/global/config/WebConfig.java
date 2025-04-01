@@ -46,6 +46,14 @@ public class WebConfig implements WebMvcConfigurer {
 		return registrationBean;
 	}
 
+	@Bean
+	public FilterRegistrationBean<JwtFilter> customKakaoLoginFilter() {
+		FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
+		registrationBean.setFilter(jwtFilter);
+		registrationBean.addUrlPatterns("/auth/login/kakao"); // 카카오 로그인 경로에서 필터 적용
+		return registrationBean;
+	}
+
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new CurrentUserArgumentResolver(jwtService));
