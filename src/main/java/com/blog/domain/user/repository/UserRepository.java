@@ -36,6 +36,12 @@ public class UserRepository {
 			user.getEmail(), user.getPassword(), user.getName());
 	}
 
+	public void kakaoSave(User user) {
+		jdbcTemplate.update(
+			"INSERT INTO USER (EMAIL, PASSWORD, NAME, KAKAOID) VALUES (?, ?, ?, ?)",
+			user.getEmail(), user.getPassword(), user.getName(), user.getKakaoId());
+	}
+
 	public Optional<User> find(Long userId){
 		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE ID = ?";
 

@@ -17,6 +17,7 @@ public class User extends BaseEntity {
 	String introduction;
 
 	String refreshToken;
+	Long kakaoId;
 
 	public User(String email, String password, String name) {
 		this.email = email;
@@ -29,6 +30,13 @@ public class User extends BaseEntity {
 		this.email = email;
 		this.password = password;
 		this.name = name;
+	}
+
+	public User(String email, String password, String name, Long kakaoId) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.kakaoId = kakaoId;
 	}
 
 
@@ -51,5 +59,7 @@ public class User extends BaseEntity {
 	public String getPassword() {
 		return password;
 	}
+
+	public Long getKakaoId(){ return kakaoId; }
 
 }
