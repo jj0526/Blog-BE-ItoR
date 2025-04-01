@@ -25,9 +25,7 @@ public class UserService {
 		if(userRepository.findByEmail(userSaveDTO.getEmail()).isPresent()){
 			throw new UserAlreadyExistsException();
 		}
-		User user = User.fromDTO(userSaveDTO.getEmail(),
-			PasswordEncoder.encrypt(userSaveDTO.getEmail(), userSaveDTO.getPassword()),
-			userSaveDTO.getName());
+		User user = User.fromDTO(userSaveDTO);
 
 		userRepository.save(user);
 	}

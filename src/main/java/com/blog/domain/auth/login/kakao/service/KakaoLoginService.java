@@ -57,6 +57,7 @@ public class KakaoLoginService {
 			kakaoProfile.getKakaoAccount().getProfile().getNickname(),
 			kakaoProfile.getId()
 		);
+		// Todo : 추후 카카오 로그인 유저 가입시 추가 정보도 받도록 수정
 		userRepository.kakaoSave(kakaoUser);
 		return userRepository.findByEmail(kakaoUser.getEmail()).orElseThrow(UserNotFoundException::new);
 	}

@@ -32,8 +32,18 @@ public class UserRepository {
 
 	public void save(User user) {
 		jdbcTemplate.update(
-			"INSERT INTO USER (EMAIL, PASSWORD, NAME) VALUES (?, ?, ?)",
-			user.getEmail(), user.getPassword(), user.getName());
+			"INSERT INTO USER (email, password, name, nickname, birthDate, profileImageUrl, introduction, kakaoId) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			user.getEmail(),
+			user.getPassword(),
+			user.getName(),
+			user.getNickname(),
+			user.getBirthDate(),
+			user.getProfileImageUrl(),
+			user.getIntroduction(),
+			user.getKakaoId()
+		);
+
 	}
 
 	public void kakaoSave(User user) {

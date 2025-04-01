@@ -13,6 +13,8 @@ import com.blog.domain.user.service.UserService;
 import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -25,7 +27,7 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-	public CommonResponse<Void> signup(@RequestBody UserSaveDTO userSaveDTO){
+	public CommonResponse<Void> signup(@Valid @RequestBody UserSaveDTO userSaveDTO){
 		userService.save(userSaveDTO);
 		return CommonResponse.createSuccess();
 	}
