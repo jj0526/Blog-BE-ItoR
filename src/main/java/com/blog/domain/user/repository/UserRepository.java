@@ -48,8 +48,8 @@ public class UserRepository {
 
 	public void kakaoSave(User user) {
 		jdbcTemplate.update(
-			"INSERT INTO USER (EMAIL, PASSWORD, NAME, KAKAOID) VALUES (?, ?, ?, ?)",
-			user.getEmail(), user.getPassword(), user.getName(), user.getKakaoId());
+			"INSERT INTO USER (EMAIL, PASSWORD, NAME, KAKAOID, INTRODUCTION) VALUES (?, ?, ?, ?, ?)",
+			user.getEmail(), user.getPassword(), user.getName(), user.getKakaoId(), "Write an introduction");
 	}
 
 	public Optional<User> find(Long userId){
