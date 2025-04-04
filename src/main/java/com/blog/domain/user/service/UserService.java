@@ -27,7 +27,13 @@ public class UserService {
 		if(userRepository.findByEmail(userSaveDTO.getEmail()).isPresent()){
 			throw new UserAlreadyExistsException();
 		}
-		User user = User.fromDTO(userSaveDTO, passwordEncoder);
+		User user = User.fromDTO(userSaveDTO.getEmail(), passwordEncoder.encrypt(userSaveDTO.getEmail(), userSaveDTO.getPassword()),
+			userSaveDTO.getName(),
+			userSaveDTO.getNickname(),
+			userSaveDTO.getIntroduction(),
+			userSaveDTO.getBirthDate(),
+			userSaveDTO.getProfileImageUrl(),
+			0);	// kakaoId는 UserSaveDTO에 없으므로 0으로 설정);
 
 		userRepository.save(user);
 	}

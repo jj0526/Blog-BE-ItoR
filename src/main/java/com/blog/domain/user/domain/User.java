@@ -53,19 +53,11 @@ public class User extends BaseEntity {
 		this.profileImageUrl = profileImageUrl;
 	}
 
-	public static User fromDTO(UserSaveDTO userSaveDTO, PasswordEncoder passwordEncoder) {
-		return new User(
-			userSaveDTO.getEmail(),
-			PasswordEncoder.encrypt(userSaveDTO.getEmail(), userSaveDTO.getPassword()),
-			userSaveDTO.getName(),
-			userSaveDTO.getNickname(),
-			userSaveDTO.getIntroduction(),
-			userSaveDTO.getBirthDate(),
-			userSaveDTO.getProfileImageUrl(),
-			0  // kakaoId는 UserSaveDTO에 없으므로 0으로 설정
-		);
-	}
+	public static User fromDTO(String email, String password, String name, String nickname,
+		String introduction, LocalDate birthDate, String profileImageUrl, long kakaoId) {
 
+		return new User(email, password, name, nickname, introduction, birthDate, profileImageUrl, kakaoId);
+	}
 
 	public long getId() {
 		return id;
