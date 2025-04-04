@@ -52,7 +52,7 @@ public class UserRepository {
 			user.getEmail(), user.getPassword(), user.getName(), user.getKakaoId(), "Write an introduction");
 	}
 
-	public Optional<User> find(Long userId){
+	public Optional<User> find(long userId){
 		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE ID = ?";
 
 		try {

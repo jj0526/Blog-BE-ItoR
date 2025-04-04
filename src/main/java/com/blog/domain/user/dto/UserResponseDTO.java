@@ -4,11 +4,11 @@ import com.blog.domain.user.domain.User;
 
 public class UserResponseDTO {
 
-	Long userId;
+	long userId;
 	String name;
 	String email;
 
-	public Long getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
@@ -20,7 +20,7 @@ public class UserResponseDTO {
 		return email;
 	}
 
-	public UserResponseDTO(Long userId, String name, String email){
+	public UserResponseDTO(long userId, String name, String email){
 		this.userId = userId;
 		this.name = name;
 		this.email = email;

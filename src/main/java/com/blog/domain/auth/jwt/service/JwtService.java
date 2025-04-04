@@ -42,7 +42,7 @@ public class JwtService {
 			.map(refreshToken -> refreshToken.replaceFirst(BEARER, ""));
 	}
 
-	public Optional<Long> extractId(String token) {
+	public long extractId(String token) {
 		try {
 			String[] parts = token.split("\\.");
 			if (parts.length != 3) {
@@ -53,18 +53,18 @@ public class JwtService {
 			return extractIdFromPayload(payloadJson);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"유효하지 않은 토큰입니다. {}", e);
-			return Optional.empty();
+			return -1L;
 		}
 	}
 
-	private Optional<Long> extractIdFromPayload(String payloadJson){
+	private long extractIdFromPayload(String payloadJson){
 		for (String entry : payloadJson.replace("{", "").replace("}", "").split(",")) {
 			String[] keyValue = entry.split(":");
 			if (keyValue.length == 2 && "id".equals(keyValue[0].trim().replace("\"", ""))) {
-				return Optional.of(Long.parseLong(keyValue[1].trim().replace("\"", "")));
+				return Long.parseLong(keyValue[1].trim().replace("\"", ""));
 			}
 		}
-		return Optional.empty();
+		return -1;
 	}
 
 	public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) throws

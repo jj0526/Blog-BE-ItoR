@@ -30,7 +30,7 @@ public class TokenProvider {
 	private String SECRET_KEY;
 	private static final String HEADER_JSON = "{\"alg\":\"HS512\",\"typ\":\"JWT\"}";
 
-	public String createToken(Long id, String email, Long expirationPeriod){
+	public String createToken(long id, String email, Long expirationPeriod){
 		Date now = new Date();
 
 		Map<String, Object> payloadMap = new HashMap<>();

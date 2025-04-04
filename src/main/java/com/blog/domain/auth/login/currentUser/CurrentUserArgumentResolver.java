@@ -21,7 +21,7 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		boolean hasAnnotation = parameter.hasParameterAnnotation(CurrentUser.class);
-		boolean parameterType = Long.class.isAssignableFrom(parameter.getParameterType());
+		boolean parameterType = long.class.isAssignableFrom(parameter.getParameterType());
 		return hasAnnotation && parameterType;  // 둘 다 충족할 시 true
 	}
 
@@ -36,7 +36,10 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
 			.orElseThrow(() -> new RuntimeException("Authorization 헤더가 없습니다."));
 
 		// 토큰에서 userId 추출
-		return jwtService.extractId(token)
-			.orElseThrow(() -> new RuntimeException("유효하지 않은 토큰입니다."));
+		long userId = jwtService.extractId(token);
+		if (userId == -1L) {
+			throw new RuntimeException("유효하지 않은 토큰입니다.");
+		}
+		return userId;
 	}
 }

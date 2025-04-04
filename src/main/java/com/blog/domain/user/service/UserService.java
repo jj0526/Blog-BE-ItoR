@@ -32,7 +32,7 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public UserResponseDTO getMyInfo(Long userId) {
+	public UserResponseDTO getMyInfo(long userId) {
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 		return UserResponseDTO.from(user);
 	}

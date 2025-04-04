@@ -33,7 +33,7 @@ public class UserController {
 	}
 
 	@GetMapping("/myinfo")
-	public CommonResponse<UserResponseDTO> myInfo(@CurrentUser Long userId){
+	public CommonResponse<UserResponseDTO> myInfo(@CurrentUser long userId){
 		return CommonResponse.createSuccess(userService.getMyInfo(userId));
 	}
 }

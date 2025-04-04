@@ -8,7 +8,7 @@ import com.blog.global.common.entity.BaseEntity;
 
 public class User extends BaseEntity {
 
-	Long id;
+	long id;
 	String email;
 	String password;
 	String name;
@@ -18,7 +18,7 @@ public class User extends BaseEntity {
 	String introduction;
 
 	String refreshToken;
-	Long kakaoId;
+	long kakaoId;
 
 	public User(String email, String password, String name) {
 		this.email = email;
@@ -26,14 +26,14 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
-	public User(Long userId, String email, String password, String name) {
+	public User(long userId, String email, String password, String name) {
 		this.id = userId;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 	}
 
-	public User(String email, String password, String name, Long kakaoId) {
+	public User(String email, String password, String name, long kakaoId) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -42,7 +42,7 @@ public class User extends BaseEntity {
 
 
 	public User (String email, String password, String name, String nickname,
-		String introduction, LocalDate birthDate, String profileImageUrl, Long kakaoId) {
+		String introduction, LocalDate birthDate, String profileImageUrl, long kakaoId) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -62,12 +62,12 @@ public class User extends BaseEntity {
 			userSaveDTO.getIntroduction(),
 			userSaveDTO.getBirthDate(),
 			userSaveDTO.getProfileImageUrl(),
-			null  // kakaoId는 UserSaveDTO에 없으므로 null로 설정
+			0  // kakaoId는 UserSaveDTO에 없으므로 0으로 설정
 		);
 	}
 
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -104,6 +104,6 @@ public class User extends BaseEntity {
 	}
 
 
-	public Long getKakaoId(){ return kakaoId; }
+	public long getKakaoId(){ return kakaoId; }
 
 }

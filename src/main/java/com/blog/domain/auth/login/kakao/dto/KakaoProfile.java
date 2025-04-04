@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoProfile {
-	private Long id;
+	private long id;
 	@JsonProperty("connected_at")
 	private String connectedAt;
 	private Properties properties;
 	@JsonProperty("kakao_account")
 	private KakaoAccount kakaoAccount;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

@@ -2,11 +2,11 @@ package com.blog.domain.auth.login.standard.dto;
 
 public class AuthenticationResultDTO {
 	private String email;
-	private Long userId;
+	private long userId;
 	private String accessToken;
 	private String refreshToken;
 
-	public AuthenticationResultDTO( Long userId, String email, String accessToken, String refreshToken) {
+	public AuthenticationResultDTO(long userId, String email, String accessToken, String refreshToken) {
 		this.userId = userId;
 		this.email = email;
 		this.accessToken = accessToken;
@@ -17,7 +17,7 @@ public class AuthenticationResultDTO {
 		return email;
 	}
 
-	public Long getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
