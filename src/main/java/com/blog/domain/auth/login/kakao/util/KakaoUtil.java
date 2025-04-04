@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
@@ -24,7 +25,8 @@ public class KakaoUtil {
 	private String redirect;
 
 	public KakaoDTO requestToken(String accessCode) {
-		RestTemplate restTemplate = new RestTemplate();
+		RestClient restClient = RestClient.create();
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -34,24 +36,20 @@ public class KakaoUtil {
 		params.add("redirect_url", redirect);
 		params.add("code", accessCode);
 
-		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
-
-		ResponseEntity<String> response = restTemplate.exchange(
-			"https://kauth.kakao.com/oauth/token",
-			HttpMethod.POST,
-			kakaoTokenRequest,
-			String.class);
+		String response = restClient.post()
+			.uri("https://kauth.kakao.com/oauth/token")
+			.headers(httpHeaders -> httpHeaders.addAll(headers))
+			.body(params)
+			.retrieve()
+			.body(String.class);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		KakaoDTO oAuthToken = null;
-
 		try {
-			oAuthToken = objectMapper.readValue(response.getBody(), KakaoDTO.class);
+			return objectMapper.readValue(response, KakaoDTO.class);
 		} catch (JsonProcessingException e) {
 			throw new KakaoParsingException();
 		}
-		return oAuthToken;
 	}
 
 	public KakaoProfile requestProfile(KakaoDTO oAuthToken) {
