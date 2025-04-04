@@ -50,22 +50,21 @@ public class JwtService {
 			}
 
 			String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]));
-
-			for (String entry : payloadJson.replace("{", "").replace("}", "").split(",")) {
-				String[] keyValue = entry.split(":");
-				if (keyValue.length == 2) {
-					String key = keyValue[0].trim().replace("\"", "");
-					String value = keyValue[1].trim().replace("\"", "");
-					if ("id".equals(key)) {
-						return Optional.of(Long.parseLong(value));
-					}
-				}
-			}
-			return null;
+			return extractIdFromPayload(payloadJson);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"유효하지 않은 토큰입니다. {}", e);
-			return null;
+			return Optional.empty();
 		}
+	}
+
+	private Optional<Long> extractIdFromPayload(String payloadJson){
+		for (String entry : payloadJson.replace("{", "").replace("}", "").split(",")) {
+			String[] keyValue = entry.split(":");
+			if (keyValue.length == 2 && "id".equals(keyValue[0].trim().replace("\"", ""))) {
+				return Optional.of(Long.parseLong(keyValue[1].trim().replace("\"", "")));
+			}
+		}
+		return Optional.empty();
 	}
 
 	public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) throws
