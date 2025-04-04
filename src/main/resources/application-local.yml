@@ -21,13 +21,3 @@ blog:
     auth:
       client: ${KAKAO_CLIENT}
       redirect: ${KAKAO_REDIRECT}
-
-
-
-
-
-
-
-
-
-
