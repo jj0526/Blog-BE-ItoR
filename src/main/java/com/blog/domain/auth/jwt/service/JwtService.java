@@ -42,31 +42,6 @@ public class JwtService {
 			.map(refreshToken -> refreshToken.replace(BEARER, ""));
 	}
 
-	public String extractEmail(String accessToken) {
-		try {
-			String[] parts = accessToken.split("\\.");
-			if (parts.length != 3) {
-				throw new InvalidTokenException();
-			}
-
-			String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]));
-
-			for (String entry : payloadJson.replace("{", "").replace("}", "").split(",")) {
-				String[] keyValue = entry.split(":");
-				if (keyValue.length == 2) {
-					String key = keyValue[0].trim().replace("\"", "");
-					String value = keyValue[1].trim().replace("\"", "");
-					if ("sub".equals(key)) {
-						return value;
-					}
-				}
-			}
-			return null;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public Optional<Long> extractId(String token) {
 		try {
 			String[] parts = token.split("\\.");
