@@ -16,17 +16,20 @@ import com.blog.domain.auth.login.exception.AuthenticationFailedException;
 public class LoginService {
 	private final TokenProvider tokenProvider;
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
-	public LoginService(UserRepository userRepository, TokenProvider tokenProvider) {
+	public LoginService(UserRepository userRepository, TokenProvider tokenProvider, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.tokenProvider = tokenProvider;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public AuthenticationResultDTO authenticate(LoginRequestDTO loginRequestDTO) {
 
 		String email = loginRequestDTO.getEmail();
-		String password = PasswordEncoder.encrypt(email, loginRequestDTO.getPassword());
+		String password = passwordEncoder.encrypt(email, loginRequestDTO.getPassword());
 
 		User user = userRepository.findByEmail(email).orElseThrow(AuthenticationFailedException::new);
 		if (!user.getPassword().equals(password)) {

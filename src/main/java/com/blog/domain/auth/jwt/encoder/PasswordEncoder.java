@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordEncoder {
-	public static String encrypt(String userEmail, String password) {
+	public String encrypt(String userEmail, String password) {
 		try {
 			KeySpec spec = new PBEKeySpec(password.toCharArray(), getSalt(userEmail), 85319, 128);
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -26,7 +26,7 @@ public class PasswordEncoder {
 		}
 	}
 
-	private static byte[] getSalt(String password)
+	private byte[] getSalt(String password)
 		throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
 		MessageDigest digest = MessageDigest.getInstance("SHA-512");
