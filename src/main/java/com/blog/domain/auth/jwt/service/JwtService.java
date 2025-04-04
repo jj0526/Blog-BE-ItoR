@@ -33,13 +33,13 @@ public class JwtService {
 	public Optional<String> extractRefreshToken(HttpServletRequest request) {
 		return Optional.ofNullable(request.getHeader(refreshHeader))
 			.filter(refreshToken -> refreshToken.startsWith(BEARER))
-			.map(refreshToken -> refreshToken.replace(BEARER, ""));
+			.map(refreshToken -> refreshToken.replaceFirst(BEARER, ""));
 	}
 
 	public Optional<String> extractAccessToken(HttpServletRequest request) {
 		return Optional.ofNullable(request.getHeader(accessHeader))
 			.filter(refreshToken -> refreshToken.startsWith(BEARER))
-			.map(refreshToken -> refreshToken.replace(BEARER, ""));
+			.map(refreshToken -> refreshToken.replaceFirst(BEARER, ""));
 	}
 
 	public Optional<Long> extractId(String token) {

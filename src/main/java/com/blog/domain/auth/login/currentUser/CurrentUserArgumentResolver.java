@@ -32,7 +32,7 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
 
 		// Authorization 헤더에서 토큰 추출
 		String token = Optional.ofNullable(webRequest.getHeader("Authorization"))
-			.map(accessToken -> accessToken.replace("Bearer ", ""))
+			.map(accessToken -> accessToken.replaceFirst("Bearer ", ""))
 			.orElseThrow(() -> new RuntimeException("Authorization 헤더가 없습니다."));
 
 		// 토큰에서 userId 추출
