@@ -21,3 +21,5 @@ blog:
     auth:
       client: ${KAKAO_CLIENT}
       redirect: ${KAKAO_REDIRECT}
+  excluded-urls:
+    /login,/api/users/signup,/auth/login/kakao,/swagger-ui/**,/swagger-ui.html

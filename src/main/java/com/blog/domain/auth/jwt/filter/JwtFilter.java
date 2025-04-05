@@ -23,8 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 	private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
-	private static final List<String> excludedUrls = List.of("/login", "/api/users/signup",
-		"/auth/login/kakao", "/swagger-ui/**", "/swagger-ui.html");
+	@Value("#{'${blog.excluded-urls}'.split(',')}")
+	private List<String> excludedUrls;
 	@Value("${blog.jwt.key}")
 	private String SECRET_KEY;
 
