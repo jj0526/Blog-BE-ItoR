@@ -49,11 +49,15 @@ public class UserRepository {
 	public void kakaoSave(User user) {
 		jdbcTemplate.update(
 			"INSERT INTO USER (EMAIL, PASSWORD, NAME, KAKAOID, INTRODUCTION) VALUES (?, ?, ?, ?, ?)",
-			user.getEmail(), user.getPassword(), user.getName(), user.getKakaoId(), "Write an introduction");
+			user.getEmail(),
+			user.getPassword(),
+			user.getName(),
+			user.getKakaoId(),
+			"Write an introduction");
 	}
 
 	public Optional<User> find(long userId){
-		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE ID = ?";
+		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE ID = ?";
 
 		try {
 			return Optional.of(jdbcTemplate.queryForObject(
@@ -62,7 +66,6 @@ public class UserRepository {
 				(rs, rowNum) -> new User(
 					rs.getLong("ID"),
 					rs.getString("EMAIL"),
-					rs.getString("PASSWORD"),
 					rs.getString("NAME")
 				)
 			));
@@ -72,7 +75,7 @@ public class UserRepository {
 	}
 
 	public Optional<User> findByRefreshToken(String refreshToken){
-		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE refreshToken = ?";
+		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE refreshToken = ?";
 
 		try {
 			return Optional.of(jdbcTemplate.queryForObject(
@@ -81,7 +84,6 @@ public class UserRepository {
 				(rs, rowNum) -> new User(
 					rs.getLong("ID"),
 					rs.getString("EMAIL"),
-					rs.getString("PASSWORD"),
 					rs.getString("NAME")
 				)
 			));
@@ -91,7 +93,7 @@ public class UserRepository {
 	}
 
 	public Optional<User> findByEmail(String email) {
-		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE email = ?";
+		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE email = ?";
 
 		try {
 			return Optional.of(jdbcTemplate.queryForObject(
@@ -100,7 +102,6 @@ public class UserRepository {
 				(rs, rowNum) -> new User(
 					rs.getLong("ID"),
 					rs.getString("EMAIL"),
-					rs.getString("PASSWORD"),
 					rs.getString("NAME")
 				)
 			));

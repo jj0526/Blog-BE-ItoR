@@ -20,9 +20,9 @@ public class User extends BaseEntity {
 	String refreshToken;
 	long kakaoId;
 
-	public User(String email, String password, String name) {
+	public User(Long id, String email, String name) {
+		this.id = id;
 		this.email = email;
-		this.password = password;
 		this.name = name;
 	}
 
