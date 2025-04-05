@@ -33,7 +33,7 @@ public class UserService {
 			userSaveDTO.getIntroduction(),
 			userSaveDTO.getBirthDate(),
 			userSaveDTO.getProfileImageUrl(),
-			0);	// kakaoId는 UserSaveDTO에 없으므로 0으로 설정);
+			0L);	// kakaoId는 UserSaveDTO에 없으므로 0으로 설정);
 
 		userRepository.save(user);
 	}

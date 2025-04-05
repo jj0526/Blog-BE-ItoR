@@ -18,22 +18,40 @@ public class User extends BaseEntity {
 	String introduction;
 
 	String refreshToken;
-	long kakaoId;
+	Long kakaoId;
 
-	public User(Long id, String email, String name) {
+	public User(Long id, String email, String name,
+		Long kakaoId, String nickname, LocalDate birthDate, String profileImageUrl,
+		String introduction) {
 		this.id = id;
 		this.email = email;
 		this.name = name;
+		this.kakaoId = kakaoId;
+		this.nickname = nickname;
+		this.birthDate = birthDate;
+		this.profileImageUrl = profileImageUrl;
+		this.introduction = introduction;
 	}
 
-	public User(long userId, String email, String password, String name) {
-		this.id = userId;
+	public User( String password, String name, String nickname,
+		LocalDate birthDate, String profileImageUrl,
+		String introduction) {
+		this.password = password;
+		this.name = name;
+		this.nickname = nickname;
+		this.birthDate = birthDate;
+		this.profileImageUrl = profileImageUrl;
+		this.introduction = introduction;
+	}
+
+	public User(Long id, String email, String password, String name) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 	}
 
-	public User(String email, String password, String name, long kakaoId) {
+	public User(String email, String password, String name, Long kakaoId) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -42,7 +60,7 @@ public class User extends BaseEntity {
 
 
 	public User (String email, String password, String name, String nickname,
-		String introduction, LocalDate birthDate, String profileImageUrl, long kakaoId) {
+		String introduction, LocalDate birthDate, String profileImageUrl, Long kakaoId) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -54,7 +72,7 @@ public class User extends BaseEntity {
 	}
 
 	public static User fromDTO(String email, String password, String name, String nickname,
-		String introduction, LocalDate birthDate, String profileImageUrl, long kakaoId) {
+		String introduction, LocalDate birthDate, String profileImageUrl, Long kakaoId) {
 
 		return new User(email, password, name, nickname, introduction, birthDate, profileImageUrl, kakaoId);
 	}
@@ -96,6 +114,8 @@ public class User extends BaseEntity {
 	}
 
 
-	public long getKakaoId(){ return kakaoId; }
+	public Long getKakaoId(){
+		return kakaoId;
+	}
 
 }

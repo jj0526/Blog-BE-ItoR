@@ -5,13 +5,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.blog.domain.user.domain.User;
+import com.blog.domain.user.mapper.UserRowMapper;
 
 @Repository
 public class UserRepository {
 	private final JdbcTemplate jdbcTemplate;
+	private final RowMapper<User> userRowMapper = new UserRowMapper();
 
 	@Autowired
 	public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -41,7 +44,7 @@ public class UserRepository {
 			user.getBirthDate(),
 			user.getProfileImageUrl(),
 			user.getIntroduction(),
-			user.getKakaoId()
+			null
 		);
 
 	}
@@ -57,54 +60,33 @@ public class UserRepository {
 	}
 
 	public Optional<User> find(long userId){
-		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE ID = ?";
+		String sql = "SELECT ID, REFRESHTOKEN, EMAIL, PASSWORD, NAME, KAKAOID, NICKNAME, BIRTHDATE, "
+			+ "PROFILEIMAGEURL, INTRODUCTION, CREATEDAT, MODIFIEDAT FROM USER WHERE ID = ?";
 
 		try {
-			return Optional.of(jdbcTemplate.queryForObject(
-				sql,
-				new Object[] {userId},
-				(rs, rowNum) -> new User(
-					rs.getLong("ID"),
-					rs.getString("EMAIL"),
-					rs.getString("NAME")
-				)
-			));
+			return Optional.of(jdbcTemplate.queryForObject(sql, userRowMapper, userId));
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
 	}
 
 	public Optional<User> findByRefreshToken(String refreshToken){
-		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE refreshToken = ?";
+		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE refreshToken = ?";
 
 		try {
-			return Optional.of(jdbcTemplate.queryForObject(
-				sql,
-				new Object[] {refreshToken},
-				(rs, rowNum) -> new User(
-					rs.getLong("ID"),
-					rs.getString("EMAIL"),
-					rs.getString("NAME")
-				)
-			));
+			return Optional.of(jdbcTemplate.queryForObject(sql, userRowMapper, refreshToken));
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
 	}
 
 	public Optional<User> findByEmail(String email) {
-		String sql = "SELECT ID, EMAIL, NAME FROM USER WHERE email = ?";
+		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE email = ?";
 
 		try {
-			return Optional.of(jdbcTemplate.queryForObject(
-				sql,
-				new Object[] {email},
-				(rs, rowNum) -> new User(
-					rs.getLong("ID"),
-					rs.getString("EMAIL"),
-					rs.getString("NAME")
-				)
-			));
+			return Optional.of(
+				jdbcTemplate.queryForObject(sql, (rs, rowNum) -> UserRowMapper.mapBasic(rs), email)
+			);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
