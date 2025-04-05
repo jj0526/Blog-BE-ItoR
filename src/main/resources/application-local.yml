@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+blog:
+  jwt:
+    key: ${SECRET_KEY}
+    access:
+      expiration: ${ACCESS_EXP}
+      header: ${ACCESS_HEAD}
+    refresh:
+      expiration: ${REFRESH_EXP}
+      header: ${REFRESH_HEAD}
+  kakao:
+    auth:
+      client: ${KAKAO_CLIENT}
+      redirect: ${KAKAO_REDIRECT}
+  excluded-urls:
+    /login,/api/users/signup,/auth/login/kakao,/swagger-ui/**,/swagger-ui.html
