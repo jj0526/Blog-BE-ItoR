@@ -1,8 +1,6 @@
 package com.blog.domain.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.blog.domain.user.domain.User;
 import com.blog.domain.user.dto.UserResponseDTO;
 import com.blog.domain.user.dto.UserSaveDTO;
@@ -17,7 +15,6 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	@Autowired
 	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;

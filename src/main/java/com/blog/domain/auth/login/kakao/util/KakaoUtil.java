@@ -73,7 +73,6 @@ public class KakaoUtil {
 		try {
 			kakaoProfile = objectMapper.readValue(response2.getBody(), KakaoProfile.class);
 		} catch (JsonProcessingException e) {
-
 			throw new KakaoParsingException();
 		}
 
