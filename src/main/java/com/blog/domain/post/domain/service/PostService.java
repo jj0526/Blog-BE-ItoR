@@ -1,4 +1,4 @@
-package com.blog.domain.post.service;
+package com.blog.domain.post.domain.service;
 
 import org.springframework.stereotype.Service;
 

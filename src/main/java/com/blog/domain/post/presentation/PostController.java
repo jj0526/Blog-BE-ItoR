@@ -1,4 +1,4 @@
-package com.blog.domain.post.controller;
+package com.blog.domain.post.presentation;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
