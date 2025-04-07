@@ -17,6 +17,13 @@ public class Content extends BaseEntity {
 		this.contentType = contentType;
 	}
 
+	public Content(long id, Post post, String contentData, ContentType contentType) {
+		this.id = id;
+		this.post = post;
+		this.contentData = contentData;
+		this.contentType = contentType;
+	}
+
 	public long getId() {
 		return id;
 	}

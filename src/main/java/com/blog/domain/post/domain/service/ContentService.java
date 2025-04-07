@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
+import com.blog.domain.post.application.exception.ContentNotFoundException;
 import com.blog.domain.post.application.mapper.ContentMapper;
 import com.blog.domain.post.domain.entity.Content;
 import com.blog.domain.post.domain.entity.Post;
@@ -32,6 +33,14 @@ public class ContentService
 		post.setContents(contents);
 
 		return contents.stream()
+			.map(contentMapper::toResponse)
+			.toList();
+	}
+
+	public List<ContentDTO.Response> findContents(Post post) {
+		List<Content> contentList = contentRepository.findByPost(post)
+			.orElseThrow(ContentNotFoundException::new);
+		return contentList.stream()
 			.map(contentMapper::toResponse)
 			.toList();
 	}

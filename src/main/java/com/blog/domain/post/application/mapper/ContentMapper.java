@@ -12,7 +12,8 @@ public class ContentMapper {
 	}
 
 	public ContentDTO.Response toResponse(Content content){
-		return new ContentDTO.Response(content.getId(),
+		return new ContentDTO.Response(
+			content.getId(),
 			content.getContentData(),
 			content.getContentType());
 	}

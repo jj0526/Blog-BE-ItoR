@@ -1,18 +1,22 @@
 package com.blog.domain.post.domain.repository;
 
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.blog.domain.post.application.mapper.ContentRowMapper;
 import com.blog.domain.post.domain.entity.Content;
+import com.blog.domain.post.domain.entity.Post;
 
 @Repository
 public class ContentRepository {
 	private final JdbcTemplate jdbcTemplate;
+	private final ContentRowMapper contentRowMapper;
 
-	public ContentRepository(JdbcTemplate jdbcTemplate) {
+	public ContentRepository(JdbcTemplate jdbcTemplate, ContentRowMapper contentRowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.contentRowMapper = contentRowMapper;
 	}
 
 	public void saveAll(List<Content> contents) {
@@ -27,5 +31,14 @@ public class ContentRepository {
 				ps.setString(3, content.getContentType().name());
 			}
 		);
+	}
+
+	public Optional<List<Content>> findByPost(Post post) {
+		String sql = "SELECT id, post_id, content_data, content_type FROM content WHERE post_id = ?";
+		try {
+			return Optional.of(jdbcTemplate.query(sql, contentRowMapper, post.getId()));
+		} catch (Exception e) {
+			return Optional.empty();
+		}
 	}
 }

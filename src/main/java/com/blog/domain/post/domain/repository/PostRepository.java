@@ -2,8 +2,9 @@ package com.blog.domain.post.domain.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-
+import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +13,11 @@ import com.blog.domain.post.domain.entity.Post;
 @Repository
 public class PostRepository {
 	private final JdbcTemplate jdbcTemplate;
+	private final RowMapper<Post> postRowMapper;
 
-	public PostRepository(JdbcTemplate jdbcTemplate) {
+	public PostRepository(JdbcTemplate jdbcTemplate, RowMapper<Post> postRowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.postRowMapper = postRowMapper;
 	}
 
 	public Post save(Post post) {
@@ -33,5 +36,14 @@ public class PostRepository {
 
 		post.setId(keyHolder.getKey().longValue());
 		return post;
+	}
+
+	public Optional<Post> findByPostId(long postId) {
+		String sql = "SELECT id, user_id, title, comment_count FROM post WHERE id = ?";
+		try {
+			return Optional.of(jdbcTemplate.queryForObject(sql, postRowMapper, postId));
+		} catch (Exception e) {
+			return Optional.empty();
+		}
 	}
 }

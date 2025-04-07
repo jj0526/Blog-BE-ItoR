@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
+import com.blog.domain.post.application.exception.PostNotFoundException;
 import com.blog.domain.post.application.mapper.ContentMapper;
 import com.blog.domain.post.application.mapper.PostMapper;
 import com.blog.domain.post.domain.entity.Post;
@@ -43,6 +44,14 @@ public class PostService {
 		post = postRepository.save(post);
 
 		List<ContentDTO.Response> contentsResponse = contentService.saveContents(dto, post);
+
+		return postMapper.toResponse(post, contentsResponse);
+	}
+
+	public PostDTO.Response findPost(long postId) {
+		Post post = postRepository.findByPostId(postId)
+			.orElseThrow(PostNotFoundException::new);
+		List<ContentDTO.Response> contentsResponse = contentService.findContents(post);
 
 		return postMapper.toResponse(post, contentsResponse);
 	}
