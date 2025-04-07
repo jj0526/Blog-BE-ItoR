@@ -1,6 +1,8 @@
 package com.blog.domain.post.presentation;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +33,11 @@ public class PostController {
 	public CommonResponse<PostDTO.Response> findPost(@PathVariable long postId){
 		return CommonResponse.createSuccess(postService.findPost(postId));
 
+	}
+
+	@DeleteMapping("/{postId}")
+	public CommonResponse<Void> deletePost(@PathVariable long postId, @CurrentUser long userId){
+		postService.deletePost(postId, userId);
+		return CommonResponse.createSuccess();
 	}
 }

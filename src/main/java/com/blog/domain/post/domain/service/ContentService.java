@@ -3,6 +3,7 @@ package com.blog.domain.post.domain.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
@@ -43,5 +44,13 @@ public class ContentService
 		return contentList.stream()
 			.map(contentMapper::toResponse)
 			.toList();
+	}
+
+	@Transactional
+	public void deleteContents(Post post) {
+		List<Content> contentList = contentRepository.findByPost(post)
+			.orElseThrow(ContentNotFoundException::new);
+
+		contentRepository.deleteAll(contentList);
 	}
 }

@@ -41,4 +41,11 @@ public class ContentRepository {
 			return Optional.empty();
 		}
 	}
+
+	public void deleteAll(List<Content> contentList) {
+		String sql = "DELETE FROM content WHERE id = ?";
+		for (Content content : contentList) {
+			jdbcTemplate.update(sql, content.getId());
+		}
+	}
 }

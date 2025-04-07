@@ -46,4 +46,9 @@ public class PostRepository {
 			return Optional.empty();
 		}
 	}
+
+	public void delete(Post post) {
+		String sql = "DELETE FROM post WHERE id = ?";
+		jdbcTemplate.update(sql, post.getId());
+	}
 }
