@@ -23,20 +23,20 @@ public class UserRepository {
 
 	public void update(User user) {
 		jdbcTemplate.update(
-			"update USER set EMAIL = ?, PASSWORD = ? where name = ?",
+			"UPDATE user SET email = ?, password = ? WHERE name = ?",
 			user.getEmail(), user.getPassword(), user.getName());
 	}
 
 	public void updateRefreshToken(User user, String refreshToken) {
 		jdbcTemplate.update(
-			"update USER set REFRESHTOKEN = ? where ID = ?",
+			"UPDATE user SET refresh_token = ? WHERE id = ?",
 			refreshToken, user.getId());
 	}
 
 	public void save(User user) {
 		jdbcTemplate.update(
-			"INSERT INTO USER (email, password, name, nickname, birthDate, profileImageUrl, introduction, kakaoId) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			"INSERT INTO user (email, password, name, nickname, birth_date, profile_image_url, introduction, kakao_id) " +
+				"VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 			user.getEmail(),
 			user.getPassword(),
 			user.getName(),
@@ -51,7 +51,7 @@ public class UserRepository {
 
 	public void kakaoSave(User user) {
 		jdbcTemplate.update(
-			"INSERT INTO USER (EMAIL, PASSWORD, NAME, KAKAOID, INTRODUCTION) VALUES (?, ?, ?, ?, ?)",
+			"INSERT INTO user (email, password, name, kakao_id, introduction) VALUES (?, ?, ?, ?, ?)",
 			user.getEmail(),
 			user.getPassword(),
 			user.getName(),
@@ -60,10 +60,11 @@ public class UserRepository {
 	}
 
 	public Optional<User> find(long userId){
-		String sql = "SELECT ID, REFRESHTOKEN, EMAIL, PASSWORD, NAME, KAKAOID, NICKNAME, BIRTHDATE, "
-			+ "PROFILEIMAGEURL, INTRODUCTION, CREATEDAT, MODIFIEDAT FROM USER WHERE ID = ?";
+		String sql = "SELECT id, refresh_token, email, password, name, kakao_id, nickname, birth_date, "
+			+ "profile_image_url, introduction, created_at, updated_at FROM user WHERE id = ?";
 
 		try {
+			System.out.println(sql);
 			return Optional.of(jdbcTemplate.queryForObject(sql, userRowMapper, userId));
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
@@ -71,7 +72,7 @@ public class UserRepository {
 	}
 
 	public Optional<User> findByRefreshToken(String refreshToken){
-		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE refreshToken = ?";
+		String sql = "SELECT id, email, password, name FROM user WHERE refresh_token = ?";
 
 		try {
 			return Optional.of(jdbcTemplate.queryForObject(sql, userRowMapper, refreshToken));
@@ -81,7 +82,7 @@ public class UserRepository {
 	}
 
 	public Optional<User> findByEmail(String email) {
-		String sql = "SELECT ID, EMAIL, PASSWORD, NAME FROM USER WHERE email = ?";
+		String sql = "SELECT id, email, password, name FROM user WHERE email = ?";
 
 		try {
 			return Optional.of(
