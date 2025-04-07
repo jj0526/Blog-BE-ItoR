@@ -39,15 +39,14 @@ public class PostService {
 		this.contentService = contentService;
 	}
 
-	public PostDTO.Response savePost(PostDTO.Save dto, Long userId) {
+	public void savePost(PostDTO.Save dto, Long userId) {
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
 		Post post = postMapper.fromDTO(dto, user);
 		post = postRepository.save(post);
 
-		List<ContentDTO.Response> contentsResponse = contentService.saveContents(dto, post);
+		contentService.saveContents(dto, post);
 
-		return postMapper.toResponse(post, contentsResponse);
 	}
 
 	public PostDTO.Response findPost(long postId) {
@@ -83,7 +82,6 @@ public class PostService {
 		postRepository.update(post, dto.title());
 
 		contentService.deleteContents(post);
-		List<ContentDTO.Response> contentsResponse = contentService.saveContents(dto, post);
-
+		contentService.saveContents(dto, post);
 	}
 }

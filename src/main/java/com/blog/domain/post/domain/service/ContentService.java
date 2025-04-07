@@ -24,7 +24,7 @@ public class ContentService
 		this.contentRepository = contentRepository;
 	}
 
-	public List<ContentDTO.Response> saveContents(PostDTO.Save dto, Post post){
+	public void saveContents(PostDTO.Save dto, Post post){
 
 		List<Content> contents = dto.contents().stream()
 			.map(contentDto -> contentMapper.fromDTO(contentDto, post))
@@ -32,10 +32,6 @@ public class ContentService
 
 		contentRepository.saveAll(contents);
 		post.setContents(contents);
-
-		return contents.stream()
-			.map(contentMapper::toResponse)
-			.toList();
 	}
 
 	public List<ContentDTO.Response> findContents(Post post) {
