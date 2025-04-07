@@ -66,9 +66,7 @@ public class PostService {
 		Post post = postRepository.findByPostId(postId)
 			.orElseThrow(PostNotFoundException::new);
 
-		if(post.getUser().getId()!=userId){
-			throw new UnauthorizedPostAccessException();
-		}
+		validatePostAuthor(post, userId);
 
 		contentService.deleteContents(post);
 		postRepository.delete(post);
@@ -79,9 +77,7 @@ public class PostService {
 		Post post = postRepository.findByPostId(postId)
 			.orElseThrow(PostNotFoundException::new);
 
-		if(post.getUser().getId()!=userId){
-			throw new UnauthorizedPostAccessException();
-		}
+		validatePostAuthor(post, userId);
 
 		postRepository.update(post, dto.title());
 
@@ -113,5 +109,11 @@ public class PostService {
 			.toList();
 
 		return new CustomSlice<>(responses, hasNext);
+	}
+
+	void validatePostAuthor(Post post, long userId){
+		if(post.getUser().getId()!=userId){
+			throw new UnauthorizedPostAccessException();
+		}
 	}
 }
