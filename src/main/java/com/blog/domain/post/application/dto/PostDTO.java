@@ -1,5 +1,6 @@
 package com.blog.domain.post.application.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDTO {
@@ -14,7 +15,9 @@ public class PostDTO {
 		String title,
 		String nickname,
 		long commentCount,
-		List<ContentDTO.Response> contents
+		List<ContentDTO.Response> contents,
+		LocalDateTime createdAt,
+		LocalDateTime updatedAt
 		// 추후 댓글 추가 예정
 	){}
 
@@ -23,6 +26,8 @@ public class PostDTO {
 		String title,
 		String nickname,
 		long commentCount,
-		List<ContentDTO.Response> contents
+		List<ContentDTO.Response> contents,
+		LocalDateTime createdAt,
+		LocalDateTime updatedAt
 	){}
 }

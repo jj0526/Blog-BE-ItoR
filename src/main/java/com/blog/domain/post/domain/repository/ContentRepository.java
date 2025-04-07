@@ -34,7 +34,7 @@ public class ContentRepository {
 	}
 
 	public Optional<List<Content>> findByPost(Post post) {
-		String sql = "SELECT id, post_id, content_data, content_type FROM content WHERE post_id = ?";
+		String sql = "SELECT id, post_id, content_data, content_type, created_at, updated_at FROM content WHERE post_id = ?";
 		try {
 			return Optional.of(jdbcTemplate.query(sql, contentRowMapper, post.getId()));
 		} catch (Exception e) {

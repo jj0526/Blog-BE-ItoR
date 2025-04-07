@@ -20,7 +20,7 @@ public class PostRowMapper implements RowMapper<Post> {
 
 	@Override
 	public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-		return new Post(
+		Post post = new Post(
 			rs.getLong("id"),
 			userRepository.find(rs.getLong("user_id"))
 				.orElseThrow(UserNotFoundException::new),
@@ -28,5 +28,9 @@ public class PostRowMapper implements RowMapper<Post> {
 			rs.getLong("comment_count"),
 			new ArrayList<>()
 		);
+		post.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+		post.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+
+		return post;
 	}
 }

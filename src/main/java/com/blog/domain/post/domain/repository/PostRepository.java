@@ -41,7 +41,7 @@ public class PostRepository {
 	}
 
 	public Optional<Post> findByPostId(long postId) {
-		String sql = "SELECT id, user_id, title, comment_count FROM post WHERE id = ?";
+		String sql = "SELECT id, user_id, title, comment_count, created_at, updated_at  FROM post WHERE id = ?";
 		try {
 			return Optional.of(jdbcTemplate.queryForObject(sql, postRowMapper, postId));
 		} catch (Exception e) {
@@ -60,9 +60,7 @@ public class PostRepository {
 	}
 
 	public List<Post> findRecentPosts(int pageNumber, int pageSize) {
-		String sql = "SELECT id, user_id, title, comment_count FROM post ORDER BY id DESC LIMIT ? OFFSET ?";
-
+		String sql = "SELECT id, user_id, title, comment_count, created_at, updated_at FROM post ORDER BY id DESC LIMIT ? OFFSET ?";
 		return jdbcTemplate.query(sql, postRowMapper, pageSize + 1, pageNumber * pageSize);
-
 	}
 }

@@ -16,11 +16,11 @@ public class PostMapper {
 
 	public PostDTO.Response toResponse(Post post, List<ContentDTO.Response> contentResponse) {
 		return new PostDTO.Response(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			post.getCommentCount(), contentResponse);
+			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 
 	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse) {
 		return new PostDTO.ResponseAll(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			post.getCommentCount(), contentResponse);
+			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 }
