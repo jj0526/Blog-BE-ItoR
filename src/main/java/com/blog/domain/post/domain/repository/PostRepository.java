@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.domain.entity.Post;
 
 @Repository
@@ -50,5 +51,10 @@ public class PostRepository {
 	public void delete(Post post) {
 		String sql = "DELETE FROM post WHERE id = ?";
 		jdbcTemplate.update(sql, post.getId());
+	}
+
+	public void update(Post post, String title) {
+		String sql = "UPDATE post SET title = ? WHERE id = ?";
+		jdbcTemplate.update(sql, title, post.getId());
 	}
 }

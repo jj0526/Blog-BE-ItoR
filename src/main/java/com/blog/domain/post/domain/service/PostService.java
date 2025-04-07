@@ -71,4 +71,19 @@ public class PostService {
 		postRepository.delete(post);
 	}
 
+	@Transactional
+	public void updatePost(long postId, long userId, PostDTO.Save dto) {
+		Post post = postRepository.findByPostId(postId)
+			.orElseThrow(PostNotFoundException::new);
+
+		if(post.getUser().getId()!=userId){
+			throw new UnauthorizedPostAccessException();
+		}
+
+		postRepository.update(post, dto.title());
+
+		contentService.deleteContents(post);
+		List<ContentDTO.Response> contentsResponse = contentService.saveContents(dto, post);
+
+	}
 }

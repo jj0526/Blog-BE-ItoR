@@ -40,4 +40,10 @@ public class PostController {
 		postService.deletePost(postId, userId);
 		return CommonResponse.createSuccess();
 	}
+
+	@PatchMapping("/{postId}")
+	public CommonResponse<Void> updatePost(@PathVariable long postId, @CurrentUser long userId, @RequestBody PostDTO.Save dto){
+		postService.updatePost(postId, userId, dto);
+		return CommonResponse.createSuccess();
+	}
 }
