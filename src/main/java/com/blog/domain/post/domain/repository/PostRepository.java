@@ -2,6 +2,7 @@ package com.blog.domain.post.domain.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -56,5 +57,12 @@ public class PostRepository {
 	public void update(Post post, String title) {
 		String sql = "UPDATE post SET title = ? WHERE id = ?";
 		jdbcTemplate.update(sql, title, post.getId());
+	}
+
+	public List<Post> findRecentPosts(int pageNumber, int pageSize) {
+		String sql = "SELECT id, user_id, title, comment_count FROM post ORDER BY id DESC LIMIT ? OFFSET ?";
+
+		return jdbcTemplate.query(sql, postRowMapper, pageSize + 1, pageNumber * pageSize);
+
 	}
 }

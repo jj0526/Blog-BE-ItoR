@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.domain.service.PostService;
 import com.blog.global.common.response.CommonResponse;
+import com.blog.global.common.slice.CustomSlice;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -33,6 +35,12 @@ public class PostController {
 	public CommonResponse<PostDTO.Response> findPost(@PathVariable long postId){
 		return CommonResponse.createSuccess(postService.findPost(postId));
 
+	}
+
+	@GetMapping()
+	public CommonResponse<CustomSlice<PostDTO.ResponseAll>> findRecentPosts(@RequestParam("pageNumber") int pageNumber,
+		@RequestParam("pageSize") int pageSize){
+		return CommonResponse.createSuccess(postService.findRecentPosts(pageNumber, pageSize));
 	}
 
 	@DeleteMapping("/{postId}")

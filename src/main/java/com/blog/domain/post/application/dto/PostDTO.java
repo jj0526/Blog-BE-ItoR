@@ -15,5 +15,14 @@ public class PostDTO {
 		String nickname,
 		long commentCount,
 		List<ContentDTO.Response> contents
+		// 추후 댓글 추가 예정
+	){}
+
+	public record ResponseAll(
+		Long id,
+		String title,
+		String nickname,
+		long commentCount,
+		List<ContentDTO.Response> contents
 	){}
 }

@@ -18,4 +18,9 @@ public class PostMapper {
 		return new PostDTO.Response(post.getId(), post.getTitle(), post.getUser().getNickname(),
 			post.getCommentCount(), contentResponse);
 	}
+
+	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse) {
+		return new PostDTO.ResponseAll(post.getId(), post.getTitle(), post.getUser().getNickname(),
+			post.getCommentCount(), contentResponse);
+	}
 }

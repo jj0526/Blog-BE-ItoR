@@ -7,7 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
+import com.blog.domain.post.application.exception.InvalidPageNumberException;
+import com.blog.domain.post.application.exception.InvalidPageSizeException;
 import com.blog.domain.post.application.exception.PostNotFoundException;
+import com.blog.domain.post.application.exception.RecentPostsNotFoundException;
 import com.blog.domain.post.application.exception.UnauthorizedPostAccessException;
 import com.blog.domain.post.application.mapper.ContentMapper;
 import com.blog.domain.post.application.mapper.PostMapper;
@@ -17,6 +20,7 @@ import com.blog.domain.post.domain.repository.PostRepository;
 import com.blog.domain.user.domain.User;
 import com.blog.domain.user.exception.UserNotFoundException;
 import com.blog.domain.user.repository.UserRepository;
+import com.blog.global.common.slice.CustomSlice;
 
 @Service
 public class PostService {
@@ -83,5 +87,31 @@ public class PostService {
 
 		contentService.deleteContents(post);
 		contentService.saveContents(dto, post);
+	}
+
+	public CustomSlice<PostDTO.ResponseAll> findRecentPosts(int pageNumber, int pageSize) {
+
+		if(pageNumber<0){
+			throw new InvalidPageNumberException();
+		}
+		if(pageSize<=0){
+			throw new InvalidPageSizeException();
+		}
+
+		List<Post> recentPosts = postRepository.findRecentPosts(pageNumber, pageSize);
+		if(recentPosts.isEmpty()){
+			throw new RecentPostsNotFoundException();
+		}
+
+		boolean hasNext = recentPosts.size() > pageSize;
+		if (hasNext) {
+			recentPosts = recentPosts.subList(0, pageSize); // 마지막 post 없애기
+		}
+
+		List<PostDTO.ResponseAll> responses = recentPosts.stream()
+			.map(post -> postMapper.toResponseAll(post, contentService.findContents(post)))
+			.toList();
+
+		return new CustomSlice<>(responses, hasNext);
 	}
 }
