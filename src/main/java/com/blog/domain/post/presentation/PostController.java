@@ -14,6 +14,7 @@ import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.domain.service.PostService;
 import com.blog.global.common.response.CommonResponse;
 import com.blog.global.common.slice.CustomSlice;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -26,7 +27,7 @@ public class PostController {
 	}
 
 	@PostMapping()
-	public CommonResponse<Void> savePost(@RequestBody PostDTO.Save dto, @CurrentUser long userId){
+	public CommonResponse<Void> savePost(@RequestBody @Valid PostDTO.Save dto, @CurrentUser long userId){
 		postService.savePost(dto, userId);
 		return CommonResponse.createSuccess();
 	}
@@ -50,7 +51,8 @@ public class PostController {
 	}
 
 	@PatchMapping("/{postId}")
-	public CommonResponse<Void> updatePost(@PathVariable long postId, @CurrentUser long userId, @RequestBody PostDTO.Save dto){
+	public CommonResponse<Void> updatePost(@PathVariable long postId, @CurrentUser long userId,
+			@RequestBody @Valid PostDTO.Save dto){
 		postService.updatePost(postId, userId, dto);
 		return CommonResponse.createSuccess();
 	}
