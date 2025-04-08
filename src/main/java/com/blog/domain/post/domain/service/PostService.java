@@ -86,13 +86,7 @@ public class PostService {
 	}
 
 	public CustomSlice<PostDTO.ResponseAll> findRecentPosts(int pageNumber, int pageSize) {
-
-		if(pageNumber<0){
-			throw new InvalidPageNumberException();
-		}
-		if(pageSize<=0){
-			throw new InvalidPageSizeException();
-		}
+		validatePageRequest(pageNumber, pageSize);
 
 		List<Post> recentPosts = postRepository.findRecentPosts(pageNumber, pageSize);
 		if(recentPosts.isEmpty()){
@@ -111,9 +105,14 @@ public class PostService {
 		return new CustomSlice<>(responses, hasNext);
 	}
 
-	void validatePostAuthor(Post post, long userId){
+	private void validatePostAuthor(Post post, long userId){
 		if(post.getUser().getId()!=userId){
 			throw new UnauthorizedPostAccessException();
 		}
+	}
+
+	private void validatePageRequest(int pageNumber, int pageSize) {
+		if (pageNumber < 0) throw new InvalidPageNumberException();
+		if (pageSize <= 0) throw new InvalidPageSizeException();
 	}
 }
