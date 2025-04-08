@@ -1,9 +1,7 @@
 package com.blog.domain.post.domain.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.blog.domain.user.domain.User;
 import com.blog.global.common.entity.BaseEntity;
 

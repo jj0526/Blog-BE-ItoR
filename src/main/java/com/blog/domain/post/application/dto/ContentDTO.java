@@ -1,6 +1,5 @@
 package com.blog.domain.post.application.dto;
 
-import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.entity.enums.ContentType;
 
 public class ContentDTO {

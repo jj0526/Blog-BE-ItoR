@@ -2,10 +2,8 @@ package com.blog.domain.post.application.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import com.blog.domain.post.application.exception.PostNotFoundException;
 import com.blog.domain.post.domain.entity.Content;
 import com.blog.domain.post.domain.entity.enums.ContentType;
