@@ -17,7 +17,7 @@ public class PostDTO {
 	){}
 
 	public record Response(
-		Long id,
+		long id,
 		String title,
 		String nickname,
 		long commentCount,
@@ -28,7 +28,7 @@ public class PostDTO {
 	){}
 
 	public record ResponseAll(
-		Long id,
+		long id,
 		String title,
 		String nickname,
 		long commentCount,

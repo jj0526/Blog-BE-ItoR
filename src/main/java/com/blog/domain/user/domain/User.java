@@ -22,7 +22,7 @@ public class User extends BaseEntity {
 
 	public User() {}
 
-	public User(Long id, String email, String name,
+	public User(long id, String email, String name,
 		Long kakaoId, String nickname, LocalDate birthDate, String profileImageUrl,
 		String introduction) {
 		this.id = id;
@@ -46,7 +46,7 @@ public class User extends BaseEntity {
 		this.introduction = introduction;
 	}
 
-	public User(Long id, String email, String password, String name) {
+	public User(long id, String email, String password, String name) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
