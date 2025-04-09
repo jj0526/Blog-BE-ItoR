@@ -30,7 +30,6 @@ public class ContentService
 			.toList();
 
 		contentRepository.saveAll(contents);
-		post.setContents(contents);
 	}
 
 	public List<ContentDTO.Response> findContents(Post post) {
