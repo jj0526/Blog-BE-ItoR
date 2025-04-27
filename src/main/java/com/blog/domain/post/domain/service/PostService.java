@@ -98,6 +98,11 @@ public class PostService {
 		return new CustomSlice<>(responses, hasNext);
 	}
 
+	public Post getPost(long postId){
+		return postRepository.findByPostId(postId)
+			.orElseThrow(PostNotFoundException::new);
+	}
+
 	private void validatePostAuthor(Post post, long userId){
 		if(post.getUser().getId()!=userId){
 			throw new UnauthorizedPostAccessException();
