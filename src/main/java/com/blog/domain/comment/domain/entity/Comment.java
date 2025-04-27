@@ -36,9 +36,22 @@ public class Comment extends BaseEntity {
 		return imageUrl;
 	}
 
+	public Comment(long id, User user, Post post, String content, String imageUrl){
+		this.id = id;
+		this.user = user;
+		this.post = post;
+		this.content = content;
+		this.imageUrl = imageUrl;
+	}
+
 	public Comment(User user, Post post, String content, String imageUrl){
 		this.user = user;
 		this.post = post;
+		this.content = content;
+		this.imageUrl = imageUrl;
+	}
+
+	public Comment(String content, String imageUrl){
 		this.content = content;
 		this.imageUrl = imageUrl;
 	}

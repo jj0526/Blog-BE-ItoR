@@ -1,8 +1,9 @@
 package com.blog.domain.comment.domain.service;
 
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.blog.domain.comment.application.dto.CommentDTO;
+import com.blog.domain.comment.application.exception.CommentNotFoundException;
 import com.blog.domain.comment.application.mapper.CommentMapper;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.comment.domain.repository.CommentRepository;
@@ -35,5 +36,17 @@ public class CommentService
 		Comment comment = commentMapper.fromDTO(post, user, dto);
 
 		commentRepository.save(comment);
+	}
+
+	@Transactional
+	public void update(long postId, long userId, CommentDTO.Save dto, long commentId) {
+
+		Comment comment = commentRepository.findByCommentId(commentId)
+			.orElseThrow(CommentNotFoundException::new);
+
+		Post post = postService.getPost(postId);
+		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
+
+		commentRepository.update(comment, dto.content(), dto.imageUrl());
 	}
 }

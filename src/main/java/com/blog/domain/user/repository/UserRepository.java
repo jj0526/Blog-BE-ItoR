@@ -64,7 +64,6 @@ public class UserRepository {
 			+ "profile_image_url, introduction, created_at, updated_at FROM user WHERE id = ?";
 
 		try {
-			System.out.println(sql);
 			return Optional.of(jdbcTemplate.queryForObject(sql, userRowMapper, userId));
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();

@@ -1,5 +1,6 @@
 package com.blog.domain.comment.presentation;
 
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,4 +27,12 @@ public class CommentController {
 		commentService.save(postId, userId, dto);
 		return CommonResponse.createSuccess();
 	}
+
+	@PatchMapping("/{postId}/comments/{commentId}")
+	public CommonResponse<Void> updateComment(@PathVariable long postId, @PathVariable long commentId,
+		@CurrentUser long userId, @RequestBody CommentDTO.Save dto){
+		commentService.update(postId, userId, dto, commentId);
+		return CommonResponse.createSuccess();
+	}
+
 }
