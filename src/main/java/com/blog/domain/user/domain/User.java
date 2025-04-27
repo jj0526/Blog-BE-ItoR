@@ -20,7 +20,9 @@ public class User extends BaseEntity {
 	String refreshToken;
 	Long kakaoId;
 
-	public User(Long id, String email, String name,
+	public User() {}
+
+	public User(long id, String email, String name,
 		Long kakaoId, String nickname, LocalDate birthDate, String profileImageUrl,
 		String introduction) {
 		this.id = id;
@@ -44,7 +46,7 @@ public class User extends BaseEntity {
 		this.introduction = introduction;
 	}
 
-	public User(Long id, String email, String password, String name) {
+	public User(long id, String email, String password, String name) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -70,6 +72,8 @@ public class User extends BaseEntity {
 		this.birthDate = birthDate;
 		this.profileImageUrl = profileImageUrl;
 	}
+
+
 
 	public static User fromDTO(String email, String password, String name, String nickname,
 		String introduction, LocalDate birthDate, String profileImageUrl, Long kakaoId) {
