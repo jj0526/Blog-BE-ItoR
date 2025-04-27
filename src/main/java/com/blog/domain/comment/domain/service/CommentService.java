@@ -1,4 +1,4 @@
-package com.blog.domain.comment.service;
+package com.blog.domain.comment.domain.service;
 
 import org.springframework.stereotype.Service;
 
