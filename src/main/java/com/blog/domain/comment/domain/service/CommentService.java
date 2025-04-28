@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.blog.domain.comment.application.dto.CommentDTO;
 import com.blog.domain.comment.application.exception.CommentNotFoundException;
+import com.blog.domain.comment.application.exception.UnauthorizedCommentAccessException;
 import com.blog.domain.comment.application.mapper.CommentMapper;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.comment.domain.repository.CommentRepository;
@@ -48,5 +49,23 @@ public class CommentService
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
 		commentRepository.update(comment, dto.content(), dto.imageUrl());
+	}
+
+	public void delete(long postId, long userId, long commentId) {
+		Comment comment = commentRepository.findByCommentId(commentId)
+			.orElseThrow(CommentNotFoundException::new);
+
+		Post post = postService.getPost(postId);
+		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
+
+		validateCommentAuthor(comment, user);
+
+		commentRepository.delete(comment);
+	}
+
+	private void validateCommentAuthor(Comment comment, User user){
+		if(comment.getUser().getId() != user.getId()){
+			throw new UnauthorizedCommentAccessException();
+		}
 	}
 }

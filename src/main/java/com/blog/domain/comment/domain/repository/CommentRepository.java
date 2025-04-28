@@ -41,4 +41,8 @@ public class CommentRepository {
 		jdbcTemplate.update(sql, content, imageUrl, comment.getId());
 	}
 
+	public void delete(Comment comment) {
+		String sql = "DELETE FROM comment WHERE id = ?";
+		jdbcTemplate.update(sql, comment.getId());
+	}
 }

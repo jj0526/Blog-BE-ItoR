@@ -1,5 +1,6 @@
 package com.blog.domain.comment.presentation;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,13 @@ public class CommentController {
 	public CommonResponse<Void> updateComment(@PathVariable long postId, @PathVariable long commentId,
 		@CurrentUser long userId, @RequestBody CommentDTO.Save dto){
 		commentService.update(postId, userId, dto, commentId);
+		return CommonResponse.createSuccess();
+	}
+
+	@DeleteMapping("/{postId}/comments/{commentId}")
+	public CommonResponse<Void> deleteComment(@PathVariable long postId, @PathVariable long commentId,
+		@CurrentUser long userId){
+		commentService.delete(postId, userId, commentId);
 		return CommonResponse.createSuccess();
 	}
 
