@@ -1,5 +1,6 @@
 package com.blog.domain.comment.domain.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -44,5 +45,11 @@ public class CommentRepository {
 	public void delete(Comment comment) {
 		String sql = "DELETE FROM comment WHERE id = ?";
 		jdbcTemplate.update(sql, comment.getId());
+	}
+
+	public List<Comment> findCommentsByPostId(long postId, int pageNumber, int pageSize) {
+		String sql = "SELECT id, user_id, post_id, content, image_url, created_at, updated_at FROM comment "
+			+ "WHERE post_id = ? ORDER BY id ASC LIMIT ? OFFSET ?";
+		return jdbcTemplate.query(sql, commentRowMapper, postId, pageSize + 1, pageNumber * pageSize);
 	}
 }

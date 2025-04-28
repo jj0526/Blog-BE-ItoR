@@ -113,4 +113,10 @@ public class PostService {
 		if (pageNumber < 0) throw new InvalidPageNumberException();
 		if (pageSize <= 0) throw new InvalidPageSizeException();
 	}
+
+	public void checkValidPostId(long postId){
+		if (!postRepository.existsById(postId)){
+			throw new PostNotFoundException();
+		}
+	}
 }

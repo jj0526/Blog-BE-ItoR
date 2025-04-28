@@ -1,5 +1,6 @@
 package com.blog.domain.comment.domain.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.blog.domain.comment.application.dto.CommentDTO;
@@ -9,11 +10,15 @@ import com.blog.domain.comment.application.exception.UnauthorizedCommentAccessEx
 import com.blog.domain.comment.application.mapper.CommentMapper;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.comment.domain.repository.CommentRepository;
+import com.blog.domain.post.application.dto.PostDTO;
+import com.blog.domain.post.application.exception.InvalidPageNumberException;
+import com.blog.domain.post.application.exception.InvalidPageSizeException;
 import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.service.PostService;
 import com.blog.domain.user.domain.User;
 import com.blog.domain.user.exception.UserNotFoundException;
 import com.blog.domain.user.repository.UserRepository;
+import com.blog.global.common.slice.CustomSlice;
 
 @Service
 public class CommentService
@@ -68,6 +73,24 @@ public class CommentService
 		commentRepository.delete(comment);
 	}
 
+	public CustomSlice<CommentDTO.Response> findComments(long postId, int pageNumber, int pageSize){
+		validatePageRequest(pageNumber, pageSize);
+		postService.checkValidPostId(postId);
+
+		List<Comment> comments = commentRepository.findCommentsByPostId(postId, pageNumber, pageSize);
+
+		boolean hasNext = comments.size() > pageSize;
+		if (hasNext) {
+			comments = comments.subList(0, pageSize); // 마지막 comment 없애기
+		}
+
+		List<CommentDTO.Response> responses = comments.stream()
+			.map(commentMapper::toResponse)
+			.toList();
+
+		return new CustomSlice<>(responses, hasNext);
+	}
+
 	private void validateCommentAuthor(Comment comment, User user){
 		if(comment.getUser().getId() != user.getId()){
 			throw new UnauthorizedCommentAccessException();
@@ -78,5 +101,10 @@ public class CommentService
 		if (comment.getPost().getId() != postId) {
 			throw new CommentMismatchPostException();
 		}
+	}
+
+	private void validatePageRequest(int pageNumber, int pageSize) {
+		if (pageNumber < 0) throw new InvalidPageNumberException();
+		if (pageSize <= 0) throw new InvalidPageSizeException();
 	}
 }
