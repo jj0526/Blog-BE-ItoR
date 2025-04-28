@@ -3,6 +3,7 @@ package com.blog.domain.comment.domain.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.blog.domain.comment.application.dto.CommentDTO;
+import com.blog.domain.comment.application.exception.CommentMismatchPostException;
 import com.blog.domain.comment.application.exception.CommentNotFoundException;
 import com.blog.domain.comment.application.exception.UnauthorizedCommentAccessException;
 import com.blog.domain.comment.application.mapper.CommentMapper;
@@ -30,6 +31,7 @@ public class CommentService
 		this.userRepository = userRepository;
 	}
 
+	@Transactional
 	public void save(long postId, long userId, CommentDTO.Save dto) {
 		Post post = postService.getPost(postId);
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
@@ -45,21 +47,22 @@ public class CommentService
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
-		Post post = postService.getPost(postId);
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
+		validateCommentBelongsToPost(comment, postId);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.update(comment, dto.content(), dto.imageUrl());
 	}
 
+	@Transactional
 	public void delete(long postId, long userId, long commentId) {
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
-		Post post = postService.getPost(postId);
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
+		validateCommentBelongsToPost(comment, postId);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.delete(comment);
@@ -68,6 +71,12 @@ public class CommentService
 	private void validateCommentAuthor(Comment comment, User user){
 		if(comment.getUser().getId() != user.getId()){
 			throw new UnauthorizedCommentAccessException();
+		}
+	}
+
+	private void validateCommentBelongsToPost(Comment comment, long postId){
+		if (comment.getPost().getId() != postId) {
+			throw new CommentMismatchPostException();
 		}
 	}
 }
