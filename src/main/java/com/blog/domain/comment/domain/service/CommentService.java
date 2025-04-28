@@ -107,4 +107,8 @@ public class CommentService
 		if (pageNumber < 0) throw new InvalidPageNumberException();
 		if (pageSize <= 0) throw new InvalidPageSizeException();
 	}
+
+	public long getCommentsCount(long postId){
+		return commentRepository.countCommentsByPostId(postId);
+	}
 }

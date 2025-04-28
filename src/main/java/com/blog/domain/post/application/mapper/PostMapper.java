@@ -14,13 +14,13 @@ public class PostMapper {
 		return new Post(user, dto.title());
 	}
 
-	public PostDTO.Response toResponse(Post post, List<ContentDTO.Response> contentResponse) {
+	public PostDTO.Response toResponse(Post post, List<ContentDTO.Response> contentResponse, long commentCount) {
 		return new PostDTO.Response(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
+			commentCount, contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 
-	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse) {
+	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse, long commentCount) {
 		return new PostDTO.ResponseAll(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
+			commentCount, contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 }

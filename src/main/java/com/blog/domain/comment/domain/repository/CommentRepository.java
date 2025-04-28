@@ -52,4 +52,9 @@ public class CommentRepository {
 			+ "WHERE post_id = ? ORDER BY id ASC LIMIT ? OFFSET ?";
 		return jdbcTemplate.query(sql, commentRowMapper, postId, pageSize + 1, pageNumber * pageSize);
 	}
+
+	public long countCommentsByPostId(long postId) {
+		String sql = "SELECT COUNT(*) FROM comment WHERE post_id = ?";
+		return jdbcTemplate.queryForObject(sql, long.class, postId);
+	}
 }
