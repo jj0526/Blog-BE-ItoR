@@ -48,6 +48,8 @@ public class CommentService
 		Post post = postService.getPost(postId);
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
+		validateCommentAuthor(comment, user);
+
 		commentRepository.update(comment, dto.content(), dto.imageUrl());
 	}
 
