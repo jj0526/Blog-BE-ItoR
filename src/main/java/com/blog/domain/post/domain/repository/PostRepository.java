@@ -69,4 +69,9 @@ public class PostRepository {
 		int count = jdbcTemplate.queryForObject(sql, int.class, postId);
 		return count > 0;
 	}
+
+	public void updateCommentCount(Post post, long commentCount) {
+		String sql = "UPDATE post SET comment_count = ? WHERE id = ?";
+		jdbcTemplate.update(sql, commentCount, post.getId());
+	}
 }

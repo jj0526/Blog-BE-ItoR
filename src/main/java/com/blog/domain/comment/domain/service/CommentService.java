@@ -43,17 +43,20 @@ public class CommentService
 		Comment comment = commentMapper.fromDTO(post, user, dto);
 
 		commentRepository.save(comment);
+
+		postService.updateCommentCount(post);
 	}
 
 	@Transactional
 	public void update(long postId, long userId, CommentDTO.Save dto, long commentId) {
+		Post post = postService.getPost(postId);
 
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
-		validateCommentBelongsToPost(comment, postId);
+		validateCommentBelongsToPost(comment, post);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.update(comment, dto.content(), dto.imageUrl());
@@ -61,15 +64,18 @@ public class CommentService
 
 	@Transactional
 	public void delete(long postId, long userId, long commentId) {
+		Post post = postService.getPost(postId);
+
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
-		validateCommentBelongsToPost(comment, postId);
+		validateCommentBelongsToPost(comment, post);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.delete(comment);
+		postService.updateCommentCount(post);
 	}
 
 	public CustomSlice<CommentDTO.Response> findComments(long postId, int pageNumber, int pageSize){
@@ -96,8 +102,8 @@ public class CommentService
 		}
 	}
 
-	private void validateCommentBelongsToPost(Comment comment, long postId){
-		if (comment.getPost().getId() != postId) {
+	private void validateCommentBelongsToPost(Comment comment, Post post){
+		if (comment.getPost().getId() != post.getId()) {
 			throw new CommentMismatchPostException();
 		}
 	}
