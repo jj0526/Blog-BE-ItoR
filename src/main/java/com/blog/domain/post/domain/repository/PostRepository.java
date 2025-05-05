@@ -63,4 +63,10 @@ public class PostRepository {
 		String sql = "SELECT id, user_id, title, comment_count, created_at, updated_at FROM post ORDER BY id DESC LIMIT ? OFFSET ?";
 		return jdbcTemplate.query(sql, postRowMapper, pageSize + 1, pageNumber * pageSize);
 	}
+
+	public boolean existsById(long postId) {
+		String sql = "SELECT COUNT(*) FROM post WHERE id = ?";
+		int count = jdbcTemplate.queryForObject(sql, int.class, postId);
+		return count > 0;
+	}
 }

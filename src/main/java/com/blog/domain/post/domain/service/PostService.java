@@ -2,8 +2,10 @@ package com.blog.domain.post.domain.service;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.blog.domain.comment.domain.service.CommentService;
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.application.exception.InvalidPageNumberException;
@@ -26,13 +28,15 @@ public class PostService {
 	private final UserRepository userRepository;
 	private final PostMapper postMapper;
 	private final ContentService contentService;
+	private final CommentService commentService;
 
 	public PostService(PostRepository postRepository, UserRepository userRepository,
-		PostMapper postMapper, ContentService contentService) {
+		PostMapper postMapper, ContentService contentService, @Lazy CommentService commentService) {
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
 		this.postMapper = postMapper;
 		this.contentService = contentService;
+		this.commentService = commentService;
 	}
 
 	@Transactional
@@ -50,8 +54,9 @@ public class PostService {
 		Post post = postRepository.findByPostId(postId)
 			.orElseThrow(PostNotFoundException::new);
 		List<ContentDTO.Response> contentsResponse = contentService.findContents(post);
+		long commentCount = commentService.getCommentsCount(postId);
 
-		return postMapper.toResponse(post, contentsResponse);
+		return postMapper.toResponse(post, contentsResponse, commentCount);
 	}
 
 	@Transactional
@@ -92,10 +97,16 @@ public class PostService {
 		}
 
 		List<PostDTO.ResponseAll> responses = recentPosts.stream()
-			.map(post -> postMapper.toResponseAll(post, contentService.findContents(post)))
+			.map(post -> postMapper.toResponseAll(post, contentService.findContents(post),
+				commentService.getCommentsCount(post.getId())))
 			.toList();
 
 		return new CustomSlice<>(responses, hasNext);
+	}
+
+	public Post getPost(long postId){
+		return postRepository.findByPostId(postId)
+			.orElseThrow(PostNotFoundException::new);
 	}
 
 	private void validatePostAuthor(Post post, long userId){
@@ -107,5 +118,11 @@ public class PostService {
 	private void validatePageRequest(int pageNumber, int pageSize) {
 		if (pageNumber < 0) throw new InvalidPageNumberException();
 		if (pageSize <= 0) throw new InvalidPageSizeException();
+	}
+
+	public void checkValidPostId(long postId){
+		if (!postRepository.existsById(postId)){
+			throw new PostNotFoundException();
+		}
 	}
 }
