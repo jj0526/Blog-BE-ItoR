@@ -39,4 +39,22 @@ public class UserService {
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 		return new UserDTO.Response(user);
 	}
+
+	public void update(long userId, UserDTO.Update dto) {
+		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
+
+		if(dto.nickname()!=null){
+			user.setNickname(dto.nickname());
+		}
+		if(dto.profileImageUrl()!=null){
+			user.setProfileImageUrl(dto.profileImageUrl());
+		}
+		if(dto.introduction()!=null){
+			user.setIntroduction(dto.introduction());
+		}
+		if(dto.password()!=null){
+			user.setPassword(passwordEncoder.encrypt(user.getEmail(), dto.password()));
+		}
+		userRepository.update(user);
+	}
 }

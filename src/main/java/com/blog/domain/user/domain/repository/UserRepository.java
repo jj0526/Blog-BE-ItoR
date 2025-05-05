@@ -7,7 +7,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.user.application.mapper.UserRowMapper;
 
@@ -23,8 +22,8 @@ public class UserRepository {
 
 	public void update(User user) {
 		jdbcTemplate.update(
-			"UPDATE user SET email = ?, password = ? WHERE name = ?",
-			user.getEmail(), user.getPassword(), user.getName());
+			"UPDATE user SET nickname = ?, password = ?, profile_image_url = ?, introduction = ? WHERE id = ?",
+			user.getNickname(), user.getPassword(), user.getProfileImageUrl(), user.getIntroduction(), user.getId());
 	}
 
 	public void updateRefreshToken(User user, String refreshToken) {

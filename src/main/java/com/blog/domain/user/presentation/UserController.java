@@ -2,6 +2,7 @@ package com.blog.domain.user.presentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,11 @@ public class UserController {
 	@GetMapping("/myinfo")
 	public CommonResponse<UserDTO.Response> myInfo(@CurrentUser long userId){
 		return CommonResponse.createSuccess(userService.getMyInfo(userId));
+	}
+
+	@PatchMapping()
+	public CommonResponse<Void> updateInfo(@CurrentUser long userId, @RequestBody UserDTO.Update dto){
+		userService.update(userId, dto);
+		return CommonResponse.createSuccess();
 	}
 }

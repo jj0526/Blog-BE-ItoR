@@ -51,4 +51,11 @@ public class UserDTO {
 		}
 	};
 
+	public record Update(
+		String password,
+		String nickname,
+		String profileImageUrl,
+		String introduction
+	){};
+
 }
