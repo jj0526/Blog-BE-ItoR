@@ -44,7 +44,7 @@ public class UserRepository {
 			user.getBirthDate(),
 			user.getProfileImageUrl(),
 			user.getIntroduction(),
-			null
+			user.getKakaoId()
 		);
 
 	}
