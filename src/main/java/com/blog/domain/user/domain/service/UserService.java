@@ -1,9 +1,10 @@
 package com.blog.domain.user.domain.service;
 
 import org.springframework.stereotype.Service;
+
+import com.blog.domain.user.application.dto.UserDTO;
 import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.user.application.dto.UserResponseDTO;
-import com.blog.domain.user.application.dto.UserSaveDTO;
 import com.blog.domain.user.application.exception.UserAlreadyExistsException;
 import com.blog.domain.user.application.exception.UserNotFoundException;
 import com.blog.domain.user.domain.repository.UserRepository;
@@ -20,17 +21,17 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public void save(UserSaveDTO userSaveDTO) {
-		if(userRepository.findByEmail(userSaveDTO.getEmail()).isPresent()){
+	public void save(UserDTO.Save dto) {
+		if(userRepository.findByEmail(dto.email()).isPresent()){
 			throw new UserAlreadyExistsException();
 		}
-		User user = User.fromDTO(userSaveDTO.getEmail(), passwordEncoder.encrypt(userSaveDTO.getEmail(), userSaveDTO.getPassword()),
-			userSaveDTO.getName(),
-			userSaveDTO.getNickname(),
-			userSaveDTO.getIntroduction(),
-			userSaveDTO.getBirthDate(),
-			userSaveDTO.getProfileImageUrl(),
-			0L);	// kakaoId는 UserSaveDTO에 없으므로 0으로 설정);
+		User user = User.fromDTO(dto.email(), passwordEncoder.encrypt(dto.email(), dto.password()),
+			dto.name(),
+			dto.nickname(),
+			dto.introduction(),
+			dto.birthDate(),
+			dto.profileImageUrl(),
+			0L);	// kakaoId는 일반 로그인 유저가 사용하지 않으므로 0으로 설정);
 
 		userRepository.save(user);
 	}

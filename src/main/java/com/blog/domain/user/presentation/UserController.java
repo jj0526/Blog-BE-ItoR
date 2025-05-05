@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.domain.user.application.dto.UserDTO;
 import com.blog.domain.user.application.dto.UserResponseDTO;
-import com.blog.domain.user.application.dto.UserSaveDTO;
 import com.blog.domain.user.domain.service.UserService;
 import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
@@ -27,8 +27,8 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-	public CommonResponse<Void> signup(@Valid @RequestBody UserSaveDTO userSaveDTO){
-		userService.save(userSaveDTO);
+	public CommonResponse<Void> signup(@Valid @RequestBody UserDTO.Save dto){
+		userService.save(dto);
 		return CommonResponse.createSuccess();
 	}
 
