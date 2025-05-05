@@ -2,6 +2,7 @@ package com.blog.domain.user.application.dto;
 
 import java.time.LocalDate;
 
+import com.blog.domain.user.domain.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.Email;
@@ -35,6 +36,19 @@ public class UserDTO {
 		LocalDate birthDate,
 		String profileImageUrl,
 		String introduction
-	){};
+	){
+		public Response(User user) {
+			this(
+				user.getId(),
+				user.getName(),
+				user.getEmail(),
+				user.getKakaoId(),
+				user.getNickname(),
+				user.getBirthDate(),
+				user.getProfileImageUrl(),
+				user.getIntroduction()
+			);
+		}
+	};
 
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.domain.user.application.dto.UserDTO;
-import com.blog.domain.user.application.dto.UserResponseDTO;
 import com.blog.domain.user.domain.service.UserService;
 import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
@@ -33,7 +32,7 @@ public class UserController {
 	}
 
 	@GetMapping("/myinfo")
-	public CommonResponse<UserResponseDTO> myInfo(@CurrentUser long userId){
+	public CommonResponse<UserDTO.Response> myInfo(@CurrentUser long userId){
 		return CommonResponse.createSuccess(userService.getMyInfo(userId));
 	}
 }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.blog.domain.user.application.dto.UserDTO;
 import com.blog.domain.user.domain.entity.User;
-import com.blog.domain.user.application.dto.UserResponseDTO;
 import com.blog.domain.user.application.exception.UserAlreadyExistsException;
 import com.blog.domain.user.application.exception.UserNotFoundException;
 import com.blog.domain.user.domain.repository.UserRepository;
@@ -36,8 +35,8 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public UserResponseDTO getMyInfo(long userId) {
+	public UserDTO.Response getMyInfo(long userId) {
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
-		return UserResponseDTO.from(user);
+		return new UserDTO.Response(user);
 	}
 }
