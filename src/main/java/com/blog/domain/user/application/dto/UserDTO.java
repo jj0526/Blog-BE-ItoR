@@ -36,20 +36,7 @@ public class UserDTO {
 		LocalDate birthDate,
 		String profileImageUrl,
 		String introduction
-	){
-		public Response(User user) {
-			this(
-				user.getId(),
-				user.getName(),
-				user.getEmail(),
-				user.getKakaoId(),
-				user.getNickname(),
-				user.getBirthDate(),
-				user.getProfileImageUrl(),
-				user.getIntroduction()
-			);
-		}
-	};
+	){};
 
 	public record Update(
 		String password,
