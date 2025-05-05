@@ -10,14 +10,13 @@ import com.blog.domain.comment.application.exception.UnauthorizedCommentAccessEx
 import com.blog.domain.comment.application.mapper.CommentMapper;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.comment.domain.repository.CommentRepository;
-import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.application.exception.InvalidPageNumberException;
 import com.blog.domain.post.application.exception.InvalidPageSizeException;
 import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.service.PostService;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.global.common.slice.CustomSlice;
 
 @Service

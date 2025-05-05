@@ -16,9 +16,9 @@ import com.blog.domain.post.application.exception.UnauthorizedPostAccessExceptio
 import com.blog.domain.post.application.mapper.PostMapper;
 import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.repository.PostRepository;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.global.common.slice.CustomSlice;
 
 @Service

@@ -1,9 +1,7 @@
-package com.blog.domain.user.domain;
+package com.blog.domain.user.domain.entity;
 
 import java.time.LocalDate;
 
-import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
-import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.global.common.entity.BaseEntity;
 
 public class User extends BaseEntity {

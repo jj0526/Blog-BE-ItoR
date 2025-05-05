@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 
 @Component
 public class PostMapper {

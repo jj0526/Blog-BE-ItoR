@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import com.blog.domain.comment.application.dto.CommentDTO;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 
 @Component
 public class CommentMapper {

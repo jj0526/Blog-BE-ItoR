@@ -5,13 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.domain.auth.jwt.service.TokenProvider;
 import com.blog.domain.auth.login.kakao.dto.KakaoDTO;
 import com.blog.domain.auth.login.kakao.dto.KakaoProfile;
 import com.blog.domain.auth.login.kakao.util.KakaoUtil;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.auth.login.standard.dto.AuthenticationResultDTO;
 
 import jakarta.servlet.http.HttpServletResponse;

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.post.application.exception.PostNotFoundException;
 import com.blog.domain.post.domain.repository.PostRepository;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 
 @Component
 public class CommentRowMapper implements RowMapper<Comment> {

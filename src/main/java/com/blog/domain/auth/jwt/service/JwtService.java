@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.blog.domain.auth.jwt.dto.JwtDTO;
 import com.blog.domain.auth.jwt.exception.InvalidTokenException;
 import com.blog.domain.auth.jwt.filter.JwtFilter;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.global.common.response.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

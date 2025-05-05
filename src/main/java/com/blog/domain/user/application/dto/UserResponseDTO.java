@@ -1,8 +1,8 @@
-package com.blog.domain.user.dto;
+package com.blog.domain.user.application.dto;
 
 import java.time.LocalDate;
 
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 
 public class UserResponseDTO {
 

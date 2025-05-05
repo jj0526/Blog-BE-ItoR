@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.auth.jwt.exception.HmacSignatureException;
 import com.blog.domain.auth.jwt.exception.InvalidTokenException;
 import com.fasterxml.jackson.databind.ObjectMapper;

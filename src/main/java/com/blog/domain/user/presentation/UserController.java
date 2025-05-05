@@ -1,4 +1,4 @@
-package com.blog.domain.user.controller;
+package com.blog.domain.user.presentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.domain.user.dto.UserResponseDTO;
-import com.blog.domain.user.dto.UserSaveDTO;
-import com.blog.domain.user.service.UserService;
+import com.blog.domain.user.application.dto.UserResponseDTO;
+import com.blog.domain.user.application.dto.UserSaveDTO;
+import com.blog.domain.user.domain.service.UserService;
 import com.blog.domain.auth.login.currentUser.CurrentUser;
 import com.blog.global.common.response.CommonResponse;
 

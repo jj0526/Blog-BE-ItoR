@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 
 @Component
 public class PostRowMapper implements RowMapper<Post> {

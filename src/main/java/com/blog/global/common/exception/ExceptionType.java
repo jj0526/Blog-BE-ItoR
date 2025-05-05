@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 
-import com.blog.domain.user.exception.UserNotFoundException;
+import com.blog.domain.user.application.exception.UserNotFoundException;
 
 public enum ExceptionType {
 	USER_NOT_FOUND(HttpStatus.BAD_REQUEST, UserNotFoundException.class);

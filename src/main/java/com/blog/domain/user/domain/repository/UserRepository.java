@@ -1,4 +1,4 @@
-package com.blog.domain.user.repository;
+package com.blog.domain.user.domain.repository;
 
 import java.util.Optional;
 
@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.mapper.UserRowMapper;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.mapper.UserRowMapper;
 
 @Repository
 public class UserRepository {

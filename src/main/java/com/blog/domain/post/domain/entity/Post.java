@@ -1,7 +1,7 @@
 package com.blog.domain.post.domain.entity;
 
 import java.util.List;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.global.common.entity.BaseEntity;
 
 public class Post extends BaseEntity {

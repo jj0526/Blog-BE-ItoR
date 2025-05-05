@@ -1,12 +1,12 @@
-package com.blog.domain.user.service;
+package com.blog.domain.user.domain.service;
 
 import org.springframework.stereotype.Service;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.dto.UserResponseDTO;
-import com.blog.domain.user.dto.UserSaveDTO;
-import com.blog.domain.user.exception.UserAlreadyExistsException;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.dto.UserResponseDTO;
+import com.blog.domain.user.application.dto.UserSaveDTO;
+import com.blog.domain.user.application.exception.UserAlreadyExistsException;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
 
 @Service
