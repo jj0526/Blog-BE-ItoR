@@ -15,6 +15,6 @@ public class CommentMapper {
 
 	public CommentDTO.Response toResponse(Comment comment){
 		return new CommentDTO.Response(comment.getId(), comment.getUser().getNickname(),
-			comment.getUser().getProfileImageUrl(), comment.getImageUrl(), comment.getCreatedAt(), comment.getUpdatedAt());
+			comment.getUser().getProfileImageUrl(), comment.getImageUrl(), comment.getContent(), comment.getCreatedAt(), comment.getUpdatedAt());
 	}
 }

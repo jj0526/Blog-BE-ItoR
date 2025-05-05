@@ -17,6 +17,7 @@ public class CommentDTO {
 		String nickname,
 		String profileImageUrl,
 		String imageUrl,
+		String content,
 		LocalDateTime createdAt,
 		LocalDateTime updatedAt
 	){}
