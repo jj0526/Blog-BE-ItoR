@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import com.blog.domain.auth.login.kakao.dto.KakaoDTO;
 import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.user.application.mapper.UserRowMapper;
 
@@ -89,5 +91,11 @@ public class UserRepository {
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
+	}
+
+	public void kakaoExtraInfoSave(User user, KakaoDTO.ExtraSave dto) {
+		jdbcTemplate.update(
+			"UPDATE user SET nickname = ?, introduction = ?, birth_date = ?, profile_image_url = ? WHERE id = ?",
+			dto.nickname(), dto.introduction(), dto.birthDate(), dto.profileImageUrl(), user.getId());
 	}
 }

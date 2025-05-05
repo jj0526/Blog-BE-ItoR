@@ -11,7 +11,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
-import com.blog.domain.auth.login.kakao.dto.KakaoDTO;
+import com.blog.domain.auth.login.kakao.dto.KakaoLoginDTO;
 import com.blog.domain.auth.login.kakao.dto.KakaoProfile;
 import com.blog.domain.auth.login.exception.KakaoParsingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +24,7 @@ public class KakaoUtil {
 	@Value("${blog.kakao.auth.redirect}")
 	private String redirect;
 
-	public KakaoDTO requestToken(String accessCode) {
+	public KakaoLoginDTO requestToken(String accessCode) {
 		RestClient restClient = RestClient.create();
 
 		HttpHeaders headers = new HttpHeaders();
@@ -46,13 +46,13 @@ public class KakaoUtil {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		try {
-			return objectMapper.readValue(response, KakaoDTO.class);
+			return objectMapper.readValue(response, KakaoLoginDTO.class);
 		} catch (JsonProcessingException e) {
 			throw new KakaoParsingException();
 		}
 	}
 
-	public KakaoProfile requestProfile(KakaoDTO oAuthToken) {
+	public KakaoProfile requestProfile(KakaoLoginDTO oAuthToken) {
 		RestTemplate restTemplate2 = new RestTemplate();
 		HttpHeaders headers2 = new HttpHeaders();
 
