@@ -16,9 +16,9 @@ import com.blog.domain.post.application.exception.UnauthorizedPostAccessExceptio
 import com.blog.domain.post.application.mapper.PostMapper;
 import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.repository.PostRepository;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.global.common.slice.CustomSlice;
 
 @Service
@@ -54,9 +54,8 @@ public class PostService {
 		Post post = postRepository.findByPostId(postId)
 			.orElseThrow(PostNotFoundException::new);
 		List<ContentDTO.Response> contentsResponse = contentService.findContents(post);
-		long commentCount = commentService.getCommentsCount(postId);
 
-		return postMapper.toResponse(post, contentsResponse, commentCount);
+		return postMapper.toResponse(post, contentsResponse);
 	}
 
 	@Transactional
@@ -97,8 +96,7 @@ public class PostService {
 		}
 
 		List<PostDTO.ResponseAll> responses = recentPosts.stream()
-			.map(post -> postMapper.toResponseAll(post, contentService.findContents(post),
-				commentService.getCommentsCount(post.getId())))
+			.map(post -> postMapper.toResponseAll(post, contentService.findContents(post)))
 			.toList();
 
 		return new CustomSlice<>(responses, hasNext);
@@ -124,5 +122,10 @@ public class PostService {
 		if (!postRepository.existsById(postId)){
 			throw new PostNotFoundException();
 		}
+	}
+
+	public void updateCommentCount(Post post) {
+		long commentCount = commentService.getCommentsCount(post.getId());
+		postRepository.updateCommentCount(post, commentCount);
 	}
 }

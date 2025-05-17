@@ -1,7 +1,9 @@
 package com.blog.domain.post.domain.entity;
 
 import java.util.List;
-import com.blog.domain.user.domain.User;
+
+import com.blog.domain.comment.domain.entity.Comment;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.global.common.entity.BaseEntity;
 
 public class Post extends BaseEntity {
@@ -41,6 +43,10 @@ public class Post extends BaseEntity {
 		this.user = user;
 		this.title = title;
 		this.commentCount = commentCount;
+	}
+
+	public boolean hasComment(Comment comment) {
+		return this.id == comment.getPost().getId();
 	}
 
 }

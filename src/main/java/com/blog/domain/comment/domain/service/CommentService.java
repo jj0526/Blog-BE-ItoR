@@ -10,14 +10,13 @@ import com.blog.domain.comment.application.exception.UnauthorizedCommentAccessEx
 import com.blog.domain.comment.application.mapper.CommentMapper;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.comment.domain.repository.CommentRepository;
-import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.application.exception.InvalidPageNumberException;
 import com.blog.domain.post.application.exception.InvalidPageSizeException;
 import com.blog.domain.post.domain.entity.Post;
 import com.blog.domain.post.domain.service.PostService;
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.global.common.slice.CustomSlice;
 
 @Service
@@ -44,17 +43,20 @@ public class CommentService
 		Comment comment = commentMapper.fromDTO(post, user, dto);
 
 		commentRepository.save(comment);
+
+		postService.updateCommentCount(post);
 	}
 
 	@Transactional
 	public void update(long postId, long userId, CommentDTO.Save dto, long commentId) {
+		Post post = postService.getPost(postId);
 
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
-		validateCommentBelongsToPost(comment, postId);
+		validateCommentBelongsToPost(comment, post);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.update(comment, dto.content(), dto.imageUrl());
@@ -62,15 +64,18 @@ public class CommentService
 
 	@Transactional
 	public void delete(long postId, long userId, long commentId) {
+		Post post = postService.getPost(postId);
+
 		Comment comment = commentRepository.findByCommentId(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 
 		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
 
-		validateCommentBelongsToPost(comment, postId);
+		validateCommentBelongsToPost(comment, post);
 		validateCommentAuthor(comment, user);
 
 		commentRepository.delete(comment);
+		postService.updateCommentCount(post);
 	}
 
 	public CustomSlice<CommentDTO.Response> findComments(long postId, int pageNumber, int pageSize){
@@ -97,8 +102,8 @@ public class CommentService
 		}
 	}
 
-	private void validateCommentBelongsToPost(Comment comment, long postId){
-		if (comment.getPost().getId() != postId) {
+	private void validateCommentBelongsToPost(Comment comment, Post post){
+		if (!post.hasComment(comment)) {
 			throw new CommentMismatchPostException();
 		}
 	}

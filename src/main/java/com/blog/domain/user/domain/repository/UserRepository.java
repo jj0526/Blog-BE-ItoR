@@ -1,4 +1,4 @@
-package com.blog.domain.user.repository;
+package com.blog.domain.user.domain.repository;
 
 import java.util.Optional;
 
@@ -8,8 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.blog.domain.user.domain.User;
-import com.blog.domain.user.mapper.UserRowMapper;
+import com.blog.domain.auth.login.kakao.dto.KakaoDTO;
+import com.blog.domain.user.domain.entity.User;
+import com.blog.domain.user.application.mapper.UserRowMapper;
 
 @Repository
 public class UserRepository {
@@ -23,8 +24,8 @@ public class UserRepository {
 
 	public void update(User user) {
 		jdbcTemplate.update(
-			"UPDATE user SET email = ?, password = ? WHERE name = ?",
-			user.getEmail(), user.getPassword(), user.getName());
+			"UPDATE user SET nickname = ?, password = ?, profile_image_url = ?, introduction = ? WHERE id = ?",
+			user.getNickname(), user.getPassword(), user.getProfileImageUrl(), user.getIntroduction(), user.getId());
 	}
 
 	public void updateRefreshToken(User user, String refreshToken) {
@@ -44,7 +45,7 @@ public class UserRepository {
 			user.getBirthDate(),
 			user.getProfileImageUrl(),
 			user.getIntroduction(),
-			null
+			user.getKakaoId()
 		);
 
 	}
@@ -90,5 +91,11 @@ public class UserRepository {
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
+	}
+
+	public void kakaoExtraInfoSave(User user, KakaoDTO.ExtraSave dto) {
+		jdbcTemplate.update(
+			"UPDATE user SET nickname = ?, introduction = ?, birth_date = ?, profile_image_url = ? WHERE id = ?",
+			dto.nickname(), dto.introduction(), dto.birthDate(), dto.profileImageUrl(), user.getId());
 	}
 }

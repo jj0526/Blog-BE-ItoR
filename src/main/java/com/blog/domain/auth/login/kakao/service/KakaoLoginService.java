@@ -4,14 +4,16 @@ package com.blog.domain.auth.login.kakao.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.blog.domain.user.exception.UserNotFoundException;
-import com.blog.domain.user.repository.UserRepository;
-import com.blog.domain.auth.jwt.service.TokenProvider;
 import com.blog.domain.auth.login.kakao.dto.KakaoDTO;
+import com.blog.domain.user.application.exception.UserNotFoundException;
+import com.blog.domain.user.domain.repository.UserRepository;
+import com.blog.domain.auth.jwt.service.TokenProvider;
+import com.blog.domain.auth.login.kakao.dto.KakaoLoginDTO;
 import com.blog.domain.auth.login.kakao.dto.KakaoProfile;
 import com.blog.domain.auth.login.kakao.util.KakaoUtil;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.domain.auth.login.standard.dto.AuthenticationResultDTO;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,9 +31,10 @@ public class KakaoLoginService {
 		this.tokenProvider = tokenProvider;
 	}
 
+	@Transactional
 	public AuthenticationResultDTO oAuthLogin(String accessCode, HttpServletResponse httpServletResponse) {
-		KakaoDTO kakaoDTO = kakaoUtil.requestToken(accessCode);
-		KakaoProfile kakaoProfile = kakaoUtil.requestProfile(kakaoDTO);
+		KakaoLoginDTO kakaoLoginDTO = kakaoUtil.requestToken(accessCode);
+		KakaoProfile kakaoProfile = kakaoUtil.requestProfile(kakaoLoginDTO);
 
 		String email = kakaoProfile.getKakaoAccount().getEmail();
 
@@ -50,7 +53,8 @@ public class KakaoLoginService {
 		return new AuthenticationResultDTO(user.getId(), user.getEmail(), accessToken, refreshToken);
 	}
 
-	private User saveNewKakaoUser(KakaoProfile kakaoProfile) {
+	@Transactional
+	public User saveNewKakaoUser(KakaoProfile kakaoProfile) {
 		User kakaoUser = new User(
 			kakaoProfile.getKakaoAccount().getEmail(),
 			null,
@@ -60,5 +64,12 @@ public class KakaoLoginService {
 		// Todo : 추후 카카오 로그인 유저 가입시 추가 정보도 받도록 수정
 		userRepository.kakaoSave(kakaoUser);
 		return userRepository.findByEmail(kakaoUser.getEmail()).orElseThrow(UserNotFoundException::new);
+	}
+
+	@Transactional
+	public void saveKakaoExtraInfo(long userId, KakaoDTO.ExtraSave dto) {
+		User user = userRepository.find(userId).orElseThrow(UserNotFoundException::new);
+
+		userRepository.kakaoExtraInfoSave(user, dto);
 	}
 }

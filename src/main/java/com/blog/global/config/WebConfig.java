@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.blog.domain.user.repository.UserRepository;
+import com.blog.domain.user.domain.repository.UserRepository;
 import com.blog.domain.auth.jwt.filter.JwtFilter;
 import com.blog.domain.auth.jwt.service.JwtService;
 import com.blog.domain.auth.jwt.service.TokenProvider;

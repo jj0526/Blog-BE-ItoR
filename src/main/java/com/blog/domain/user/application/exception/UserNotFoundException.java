@@ -1,4 +1,4 @@
-package com.blog.domain.user.exception;
+package com.blog.domain.user.application.exception;
 
 import com.blog.global.common.exception.EntityNotFoundException;
 

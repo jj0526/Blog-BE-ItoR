@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.blog.domain.post.application.dto.ContentDTO;
 import com.blog.domain.post.application.dto.PostDTO;
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 
 @Component
 public class PostMapper {
@@ -14,13 +14,13 @@ public class PostMapper {
 		return new Post(user, dto.title());
 	}
 
-	public PostDTO.Response toResponse(Post post, List<ContentDTO.Response> contentResponse, long commentCount) {
+	public PostDTO.Response toResponse(Post post, List<ContentDTO.Response> contentResponse) {
 		return new PostDTO.Response(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			commentCount, contentResponse, post.getCreatedAt(), post.getUpdatedAt());
+			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 
-	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse, long commentCount) {
+	public PostDTO.ResponseAll toResponseAll(Post post, List<ContentDTO.Response> contentResponse) {
 		return new PostDTO.ResponseAll(post.getId(), post.getTitle(), post.getUser().getNickname(),
-			commentCount, contentResponse, post.getCreatedAt(), post.getUpdatedAt());
+			post.getCommentCount(), contentResponse, post.getCreatedAt(), post.getUpdatedAt());
 	}
 }

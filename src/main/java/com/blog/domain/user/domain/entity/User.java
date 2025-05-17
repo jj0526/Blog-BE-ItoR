@@ -1,9 +1,7 @@
-package com.blog.domain.user.domain;
+package com.blog.domain.user.domain.entity;
 
 import java.time.LocalDate;
 
-import com.blog.domain.auth.jwt.encoder.PasswordEncoder;
-import com.blog.domain.user.dto.UserSaveDTO;
 import com.blog.global.common.entity.BaseEntity;
 
 public class User extends BaseEntity {
@@ -122,4 +120,19 @@ public class User extends BaseEntity {
 		return kakaoId;
 	}
 
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public void setProfileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+	}
 }

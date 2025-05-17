@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import com.blog.domain.comment.application.dto.CommentDTO;
 import com.blog.domain.comment.domain.entity.Comment;
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 
 @Component
 public class CommentMapper {
@@ -15,6 +15,6 @@ public class CommentMapper {
 
 	public CommentDTO.Response toResponse(Comment comment){
 		return new CommentDTO.Response(comment.getId(), comment.getUser().getNickname(),
-			comment.getUser().getProfileImageUrl(), comment.getImageUrl(), comment.getCreatedAt(), comment.getUpdatedAt());
+			comment.getUser().getProfileImageUrl(), comment.getImageUrl(), comment.getContent(), comment.getCreatedAt(), comment.getUpdatedAt());
 	}
 }

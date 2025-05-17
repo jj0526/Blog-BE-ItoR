@@ -1,7 +1,7 @@
 package com.blog.domain.comment.domain.entity;
 
 import com.blog.domain.post.domain.entity.Post;
-import com.blog.domain.user.domain.User;
+import com.blog.domain.user.domain.entity.User;
 import com.blog.global.common.entity.BaseEntity;
 
 public class Comment extends BaseEntity {
