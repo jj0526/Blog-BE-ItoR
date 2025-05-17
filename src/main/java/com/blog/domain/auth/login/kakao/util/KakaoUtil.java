@@ -53,29 +53,25 @@ public class KakaoUtil {
 	}
 
 	public KakaoProfile requestProfile(KakaoLoginDTO oAuthToken) {
-		RestTemplate restTemplate2 = new RestTemplate();
-		HttpHeaders headers2 = new HttpHeaders();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
 
-		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-		headers2.add("Authorization", "Bearer " + oAuthToken.getAccessToken());
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		headers.add("Authorization", "Bearer " + oAuthToken.getAccessToken());
 
-		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers2);
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
 
-		ResponseEntity<String> response2 = restTemplate2.exchange(
-			"https://kapi.kakao.com/v2/user/me",
-			HttpMethod.GET,
-			kakaoProfileRequest,
-			String.class);
-
-		KakaoProfile kakaoProfile = null;
 		ObjectMapper objectMapper = new ObjectMapper();
-
 		try {
-			kakaoProfile = objectMapper.readValue(response2.getBody(), KakaoProfile.class);
+			ResponseEntity<String> response = restTemplate.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.GET,
+				kakaoProfileRequest,
+				String.class);
+
+			return objectMapper.readValue(response.getBody(), KakaoProfile.class);
 		} catch (JsonProcessingException e) {
 			throw new KakaoParsingException();
 		}
-
-		return kakaoProfile;
 	}
 }
