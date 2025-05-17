@@ -103,7 +103,7 @@ public class CommentService
 	}
 
 	private void validateCommentBelongsToPost(Comment comment, Post post){
-		if (comment.getPost().getId() != post.getId()) {
+		if (!post.hasComment(comment)) {
 			throw new CommentMismatchPostException();
 		}
 	}
