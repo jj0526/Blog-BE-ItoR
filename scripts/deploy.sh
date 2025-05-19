@@ -34,3 +34,12 @@ if [ $cnt -eq 10 ]; then
   echo "===== 서버 실행 실패 ====="
   exit 1
 fi
+
+echo "===== Caddy 설정 변경 ====="
+sudo sed -i "s/${BEFORE_PORT}/${AFTER_PORT}/g" /etc/caddy/Caddyfile
+
+sudo caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+
+echo "$BEFORE_COLOR server down(port:${BEFORE_PORT})"
+docker compose stop spring-${BEFORE_COLOR}
+docker compose rm -f spring-${BEFORE_COLOR}
