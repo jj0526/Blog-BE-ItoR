@@ -65,7 +65,7 @@ jobs:
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
           port: 22
           source: "scripts/deploy.sh"
-          target: "/home/ubuntu/cicd/deploy.sh"
+          target: "/home/ubuntu"
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -75,6 +75,6 @@ jobs:
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            chmod +x /home/ubuntu/cicd/deploy.sh
-            sh /home/ubuntu/cicd/deploy.sh
+            chmod +x /home/ubuntu/scripts/deploy.sh
+            sh /home/ubuntu/scripts/deploy.sh
           debug: true
