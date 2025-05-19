@@ -54,15 +54,16 @@ jobs:
     # if: github.event_name == 'push' 테스트를 위해 주석 처리
 
     steps:
-      - name: Copy deploy script file to remote
+      - name: Copy deploy.sh to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_EC2_USER }}
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
           port: 22
-          source: "deploy.sh"
+          source: "/scripts/deploy.sh"
           target: "/home/ubuntu/cicd"
+          rm: true
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
