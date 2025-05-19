@@ -61,7 +61,7 @@ jobs:
           username: ${{ secrets.DEV_EC2_USER }}
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
           port: 22
-          source: "/scripts/deploy.sh"
+          source: "scripts/deploy.sh"
           target: "/home/ubuntu/cicd"
           rm: true
 
